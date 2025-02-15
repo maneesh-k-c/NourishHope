@@ -206,7 +206,7 @@ export default function NavBar() {
                                             <a href="/view-donations-restarant" className="nav-item nav-link ">
                                                 Donations
                                             </a>
-                                            <a href="/view-request-restarant" className="nav-item nav-link ">
+                                            <a href="/view-request-restaurant" className="nav-item nav-link ">
                                                 Requests
                                             </a>
                                             <a href="/feedback" className="nav-item nav-link ">

@@ -37,7 +37,7 @@ restaurantRouter.get('/singel-rest/:id', async (req, res) => {
     }
 })
 
-restaurantRouter.post('/submitfeedback', async (req, res) => {
+restaurantRouter.post('/submitfeedback', async (req, res) => {  
     try {
         console.log(req.body);
 
@@ -136,7 +136,7 @@ restaurantRouter.get('/list_donations/:login_id', async (req, res) => {
             });
         }
         const id = await restaurantData.findOne({ login_id: login_id })
-        console.log('orp', id);
+                                        
 
         const donations = await donationData.find({ restaurant_id: id?._id })
             .populate('login_id', 'username email')
@@ -146,16 +146,18 @@ restaurantRouter.get('/list_donations/:login_id', async (req, res) => {
             //     select: 'name mobile email'
             // })
             .populate('orphanage_id.orphanage', 'orphanage_name address mobile');
-        // const userDatas = await userData.findOne({login_id:donations.login_id._id})
-        // donations.user=userDatas
-        if (donations.length > 0 && donations[0].login_id) {
-            for (let i = 0; i < donations.length; i++) {
-                if (donations[i].login_id) { // Ensure login_id is not null
-                    const userDatas = await userData.findOne({ login_id: donations[i].login_id._id });
-                    donations[i] = { ...donations[i]._doc, user: userDatas }; // Correct way to add user data
+            
+            // const userDatas = await userData.findOne({login_id:donations[0]?.login_id?._id})
+            // donations.user=userDatas
+            if (donations.length > 0 && donations[0].login_id) {
+                for (let i = 0; i < donations.length; i++) {
+                    if (donations[i].login_id) { // Ensure login_id is not null
+                        const userDatas = await userData.findOne({ login_id: donations[i]?.login_id?._id });
+                        donations[i] = { ...donations[i]._doc, user: userDatas }; // Correct way to add user data
+                    }
                 }
-            }
-        
+                
+                console.log(donations);
             return res.status(200).json({
                 Success: true,
                 Error: false,
@@ -179,7 +181,7 @@ restaurantRouter.get('/list_donations/:login_id', async (req, res) => {
             Success: false,
             Error: true,
             Message: 'Internal Server Error',
-            Details: error.message,
+            Details: error,
         });
     }
 });

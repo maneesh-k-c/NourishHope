@@ -108,7 +108,7 @@ export default function Restaurants() {
                                         <div className="event-text">
                                             <h3>{data?.restaurant_name}</h3>
                                             <p>
-                                                Lorem ipsum dolor sit amet elit. Neca pretim miura bitur
+                                            {data?.description}
                                             </p>
                                             {role == 'admin' ?
                                                 <a className="btn btn-custom btn-danger text-white"

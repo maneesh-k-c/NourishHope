@@ -158,8 +158,10 @@ registerRouter.post('/restaurant', uploadImage.array('image', 1), async (req, re
             login_id: result._id,
             restaurant_name: req.body.restaurant_name,
             mobile: req.body.mobile,
+            email: req.body.email,
             upi: req.body.upi,
             address: req.body.address,
+            description: req.body.description,
             restaurant_images: req.files ? req.files.map((file) => file.path) : null,
         };
         const result2 = await restaurantData(reg).save();
@@ -247,6 +249,7 @@ registerRouter.post('/orphanage', uploadImage.array('orphanage_images', 1), asyn
             orphanage_name: req.body.orphanage_name,
             mobile: req.body.mobile,
             email: req.body.email,
+            description: req.body.description,
             upi: req.body.upi,
             address: req.body.address,
             orphanage_images: req.files ? req.files.map((file) => file.path) : null,
@@ -277,81 +280,232 @@ registerRouter.post('/orphanage', uploadImage.array('orphanage_images', 1), asyn
     }
 });
 
-registerRouter.put('/update-orphanage/:id',async (req, res) => {
-        try {
-            const orphanageId = req.params.id;
-            const orphanage = await orphanageData.findOne({ login_id: orphanageId });
-            console.log(req.body);
-            console.log('hi');
-            if (!orphanage) {
-                return res.status(404).json({
-                    Success: false,
-                    Error: true,
-                    Message: 'Orphanage not found',
-                });
-            }
-
-            // Check if email is being updated and if it already exists
-            if (req.body.email && req.body.email !== orphanage.email) {
-                const emailExists = await loginData.findOne({ email: req.body.email });
-                if (emailExists) {
-                    return res.status(400).json({
-                        Success: false,
-                        Error: true,
-                        Message: 'Email already exists',
-                    });
-                }
-            }
-
-            // Check if mobile number is being updated and if it already exists
-            if (req.body.mobile && req.body.mobile !== orphanage.mobile) {
-                const mobileExists = await orphanageData.findOne({ mobile: req.body.mobile });
-                if (mobileExists) {
-                    return res.status(400).json({
-                        Success: false,
-                        Error: true,
-                        Message: 'Mobile number already exists',
-                    });
-                }
-            }
-            console.log('hi');
-
-            // Update orphanage details
-            const logData = {
-                username:req.body.username || orphanage.username,
-                password:req.body.password || orphanage.password,
-            }
-            const orpData = {
-                orphanage_name : req.body.orphanage_name || orphanage.orphanage_name,
-                mobile : req.body.mobile || orphanage.mobile,
-                email : req.body.email || orphanage.email,
-                upi : req.body.upi || orphanage.upi,
-                address : req.body.address || orphanage.address,
-            }
-            const updateOrp = await orphanageData.updateOne({login_id:orphanageId},{$set:orpData})
-            const updateLog = await loginData.updateOne({_id:orphanageId},{$set:logData})
-            // if (req.files && req.files.length > 0) {
-            //     orphanage.orphanage_images = req.files.map((file) => file.path);
-            // }
-console.log('orpData',orpData);
-console.log(updateOrp);
-
-            
-
-            return res.json({
-                Success: true,
-                Error: false,
-                data: orphanage,
-                Message: 'Orphanage details updated successfully',
-            });
-        } catch (error) {
-            return res.status(500).json({
+registerRouter.put('/update-orphanage/:id', async (req, res) => {
+    try {
+        const orphanageId = req.params.id;
+        const orphanage = await orphanageData.findOne({ login_id: orphanageId });
+        console.log(req.body);
+        console.log('hi');
+        if (!orphanage) {
+            return res.status(404).json({
                 Success: false,
                 Error: true,
-                Message: 'Something went wrong',
+                Message: 'Orphanage not found',
             });
         }
-    });
+
+        // Check if email is being updated and if it already exists
+        if (req.body.email && req.body.email !== orphanage.email) {
+            const emailExists = await loginData.findOne({ email: req.body.email });
+            if (emailExists) {
+                return res.status(400).json({
+                    Success: false,
+                    Error: true,
+                    Message: 'Email already exists',
+                });
+            }
+        }
+
+        // Check if mobile number is being updated and if it already exists
+        if (req.body.mobile && req.body.mobile !== orphanage.mobile) {
+            const mobileExists = await orphanageData.findOne({ mobile: req.body.mobile });
+            if (mobileExists) {
+                return res.status(400).json({
+                    Success: false,
+                    Error: true,
+                    Message: 'Mobile number already exists',
+                });
+            }
+        }
+        console.log('hi');
+
+        // Update orphanage details
+        const logData = {
+            username: req.body.username || orphanage.username,
+            password: req.body.password || orphanage.password,
+        }
+        const orpData = {
+            orphanage_name: req.body.orphanage_name || orphanage.orphanage_name,
+            mobile: req.body.mobile || orphanage.mobile,
+            email: req.body.email || orphanage.email,
+            upi: req.body.upi || orphanage.upi,
+            address: req.body.address || orphanage.address,
+        }
+        const updateOrp = await orphanageData.updateOne({ login_id: orphanageId }, { $set: orpData })
+        const updateLog = await loginData.updateOne({ _id: orphanageId }, { $set: logData })
+        // if (req.files && req.files.length > 0) {
+        //     orphanage.orphanage_images = req.files.map((file) => file.path);
+        // }
+        console.log('orpData', orpData);
+        console.log(updateOrp);
+
+
+
+        return res.json({
+            Success: true,
+            Error: false,
+            data: orphanage,
+            Message: 'Orphanage details updated successfully',
+        });
+    } catch (error) {
+        return res.status(500).json({
+            Success: false,
+            Error: true,
+            Message: 'Something went wrong',
+        });
+    }
+});
+
+registerRouter.post('/update-user', async (req, res) => {
+    try {
+        const loginId = req.body.loginId;
+        const user = await userData.findOne({ login_id: loginId });
+        console.log(req.body);
+        console.log('hi');
+        if (!user) {
+            return res.status(404).json({
+                Success: false,
+                Error: true,
+                Message: 'User not found',
+            });
+        }
+
+        // Check if email is being updated and if it already exists
+        if (req.body.email && req.body.email !== user.email) {
+            const emailExists = await loginData.findOne({ email: req.body.email });
+            if (emailExists) {
+                return res.status(400).json({
+                    Success: false,
+                    Error: true,
+                    Message: 'Email already exists',
+                });
+            }
+        }
+
+        // Check if mobile number is being updated and if it already exists
+        if (req.body.mobile && req.body.mobile !== user.mobile) {
+            const mobileExists = await orphanageData.findOne({ mobile: req.body.mobile });
+            if (mobileExists) {
+                return res.status(400).json({
+                    Success: false,
+                    Error: true,
+                    Message: 'Mobile number already exists',
+                });
+            }
+        }
+        console.log('hi');
+
+        // Update orphanage details
+        const logData = {
+            username: req.body.username || user.username,
+            password: req.body.password || user.password,
+        }
+        const orpData = {
+            name: req.body.name || user.name,
+            mobile: req.body.mobile || user.mobile,
+            email: req.body.email || user.email,
+           
+        }
+        const updateOrp = await userData.updateOne({ login_id: loginId }, { $set: orpData })
+        const updateLog = await loginData.updateOne({ _id: loginId }, { $set: logData })
+        // if (req.files && req.files.length > 0) {
+        //     orphanage.orphanage_images = req.files.map((file) => file.path);
+        // }
+        console.log('orpData', orpData);
+        console.log(updateOrp);
+
+
+
+        return res.json({
+            Success: true,
+            Error: false,
+            Message: 'User details updated successfully',
+        });
+    } catch (error) {
+        return res.status(500).json({
+            Success: false,
+            Error: true,
+            Message: 'Something went wrong',
+        });
+    }
+});
+
+registerRouter.post('/update-rest', async (req, res) => {
+    try {
+        const loginId = req.body.loginId;
+        const user = await restaurantData.findOne({ login_id: loginId });
+        console.log(req.body);
+        console.log('hi');
+        if (!user) {
+            return res.status(404).json({
+                Success: false,
+                Error: true,
+                Message: 'Restaurant not found',
+            });
+        }
+
+        // Check if email is being updated and if it already exists
+        if (req.body.email && req.body.email !== user.email) {
+            const emailExists = await loginData.findOne({ email: req.body.email });
+            if (emailExists) {
+                return res.status(400).json({
+                    Success: false,
+                    Error: true,
+                    Message: 'Email already exists',
+                });
+            }
+        }
+
+        // Check if mobile number is being updated and if it already exists
+        if (req.body.mobile && req.body.mobile !== user.mobile) {
+            const mobileExists = await restaurantData.findOne({ mobile: req.body.mobile });
+            if (mobileExists) {
+                return res.status(400).json({
+                    Success: false,
+                    Error: true,
+                    Message: 'Mobile number already exists',
+                });
+            }
+        }
+        console.log('hi');
+
+        // Update orphanage details
+        const logData = {
+            username: req.body.username || user.username,
+            password: req.body.password || user.password,
+        }
+        const orpData = {
+            restaurant_name: req.body.restaurant_name || user.restaurant_name,
+            mobile: req.body.mobile || user.mobile,
+            email: req.body.email || user.email,
+            description: req.body.description || user.description,
+            upi: req.body.description || user.upi,
+            address: req.body.description || user.address,
+           
+        }
+        const updateOrp = await restaurantData.updateOne({ login_id: loginId }, { $set: orpData })
+        const updateLog = await loginData.updateOne({ _id: loginId }, { $set: logData })
+        // if (req.files && req.files.length > 0) {
+        //     orphanage.orphanage_images = req.files.map((file) => file.path);
+        // }
+        console.log('orpData', orpData);
+        console.log(updateOrp);
+
+
+
+        return res.json({
+            Success: true,
+            Error: false,
+            Message: 'Details updated successfully',
+        });
+    } catch (error) {
+        return res.status(500).json({
+            Success: false,
+            Error: true,
+            Message: 'Something went wrong',
+        });
+    }
+});
 
 registerRouter.get('/get-single-orphanage/:id', async (req, res) => {
     try {

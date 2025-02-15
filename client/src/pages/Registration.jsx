@@ -17,6 +17,7 @@ export default function Registration() {
         restaurant_name: '',
         mobile: '',
         email: '',
+        description:'',
         upi:'',
         address:'',
         image: '',
@@ -122,6 +123,10 @@ export default function Registration() {
         }
         if (!formRestData.address.trim()) {
             newErrors.address = 'This field is required';
+            isValid = false;
+        }
+        if (!formRestData.description){
+            newErrors.description = 'This field is required';
             isValid = false;
         }
         if (!formRestData.upi.trim()) {
@@ -507,7 +512,7 @@ export default function Registration() {
                                                 name="address"
                                                 className={`form-control ${resterrors.address ? 'is-invalid' : ''}`}
                                                 placeholder="Address"
-                                                value={formRestData.description}
+                                                value={formRestData.address}
                                                 style={{ borderColor: resterrors.address ? '#dc3545' : '' }}
                                                 onChange={handlerestInputChange}
                                             />
@@ -518,6 +523,23 @@ export default function Registration() {
                                                 left: '3px',
                                                 backgroundColor: '#fdbe33'
                                             }}>{resterrors.address}</div>}
+                                        </div>
+                                        <div className="control-group" style={{ position: 'relative' }}>
+                                            <textarea
+                                                name="description"
+                                                className={`form-control ${resterrors.description ? 'is-invalid' : ''}`}
+                                                placeholder="Description"
+                                                
+                                                style={{ borderColor: resterrors.description ? '#dc3545' : '' }}
+                                                onChange={handlerestInputChange}
+                                            />
+                                            {resterrors.address && <div className="invalid-feedback" style={{
+                                                position: 'absolute',
+                                                width: '130px',
+                                                top: '-15px',
+                                                left: '3px',
+                                                backgroundColor: '#fdbe33'
+                                            }}>{resterrors.description}</div>}
                                         </div>
                                         <div className="control-group" style={{ position: 'relative' }}>
                                             <input

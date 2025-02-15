@@ -107,13 +107,18 @@ export default function Profile() {
                                             <p className="mail-profile" style={{ marginBottom: '0px' }}>{profile?.email}</p>
                                             <p className="mail-profile" style={{ marginBottom: '0px' }}>+91{profile?.mobile}</p>
                                             <p className="mail-profile">Username: {role == 'user' ? profile?.login_id?.username : profile?.address}</p>
+                                            <p className="mail-profile">Address: {role == 'restaurant' ? profile?.address :''}</p>
                                         </div>
                                     </div>
                                     <div className="col-lg-4" style={{ justifyContent: 'center', }}>
                                         {role == 'orphanage' ?
 
                                             <a className='btn btn-primary' style={{ width: '60%', margin: '30px 0px', float: 'right' }} href={role == 'orphanage' ? '/update-orphanage' : ''}>Edit</a>
-                                            : ''}
+                                            : role == 'user'?
+                                            <a className='btn btn-primary' style={{ width: '60%', margin: '30px 0px', float: 'right' }} href={role == 'user' ? '/update-user' : ''}>Edit</a>
+                                            :
+                                            <a className='btn btn-primary' style={{ width: '60%', margin: '30px 0px', float: 'right' }} href={role == 'restaurant' ? '/update-rest' : ''}>Edit</a>
+                                            }
 
 
                                     </div>

@@ -15,6 +15,8 @@ import RequestsFromOrp from './pages/restaurant/RequestsFromOrp'
 import DonationHistory from './pages/user/DonationHistory'
 import TakeDonation from './pages/orphanage/TakeDonation'
 import UpdateOrphanage from './pages/orphanage/UpdateOrphanage'
+import UpdateUser from './pages/user/UpdateUser'
+import UpdateRest from './pages/restaurant/UpdateRest'
 
 
 function App() {
@@ -39,10 +41,12 @@ function App() {
 
         <Route path="/single-rest/:id" element={<SingleRestaurant/>} />  
         <Route path="/view-donations-restarant" element={<DonationsRestaurant/>} />  
-        <Route path="/view-request-restarant" element={<RequestsFromOrp/>} />  
+        <Route path="/view-request-restaurant" element={<RequestsFromOrp/>} />  
         <Route path="/view-donation-history" element={<DonationHistory/>} />  
         <Route path="/take-donation" element={<TakeDonation/>} />  
         <Route path="/update-orphanage" element={<UpdateOrphanage/>} />  
+        <Route path="/update-user" element={<UpdateUser/>} />  
+        <Route path="/update-rest" element={<UpdateRest/>} />  
       
         </Routes>
     </BrowserRouter>

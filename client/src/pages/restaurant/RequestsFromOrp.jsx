@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
 import NavBar from '../../components/navbar/NavBar';
+import Footer from '../../components/navbar/Footer';
 
 export default function RequestsFromOrp() {
     const [donations, setDonations] = useState([]);
@@ -128,7 +129,13 @@ export default function RequestsFromOrp() {
                       
     
                             <div className="row">
-                                {orphanageRequest.filter((data) => { return data.status === 'active' }).map((donation) => (
+                               {!orphanageRequest[0]?
+                                
+                                <h1 style={{
+                                    marginTop: '20px',
+                                    marginBottom: '20px', textAlign: 'center', width: '100%'}}>No Requests</h1>
+                                :
+                                orphanageRequest.filter((data) => { return data.status === 'active' }).map((donation) => (
                                     <div className="col-lg-5">
                                         <div className="event-item">
                                             <img src={donation?.orphanage_id?.orphanage_images[0]} alt="Image" />
@@ -168,7 +175,8 @@ export default function RequestsFromOrp() {
                                         </div>
                                     </div>
                                 ))
-                                }
+                                
+                            }
     
     
                             </div>
@@ -179,7 +187,7 @@ export default function RequestsFromOrp() {
     
     
     
-                        <div className="col-lg-5">
+                        {/* <div className="col-lg-5">
                             <div className="donate-form">
                                 <form onSubmit=''>
                                    
@@ -217,7 +225,7 @@ export default function RequestsFromOrp() {
                                     </div>
                                 </form>
                             </div>
-                        </div>
+                        </div> */}
 
 
                         
@@ -225,146 +233,7 @@ export default function RequestsFromOrp() {
                 </div>
                 {/* Single Post End*/}
                 {/* Footer Start */}
-                <div className="footer">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-lg-3 col-md-6">
-                                <div className="footer-contact">
-                                    <h2>Our Head Office</h2>
-                                    <p>
-                                        <i className="fa fa-map-marker-alt" />
-                                        123 Street, New York, USA
-                                    </p>
-                                    <p>
-                                        <i className="fa fa-phone-alt" />
-                                        +012 345 67890
-                                    </p>
-                                    <p>
-                                        <i className="fa fa-envelope" />
-                                        info@example.com
-                                    </p>
-                                    <div className="footer-social">
-                                        <a className="btn btn-custom" href="">
-                                            <i className="fab fa-twitter" />
-                                        </a>
-                                        <a className="btn btn-custom" href="">
-                                            <i className="fab fa-facebook-f" />
-                                        </a>
-                                        <a className="btn btn-custom" href="">
-                                            <i className="fab fa-youtube" />
-                                        </a>
-                                        <a className="btn btn-custom" href="">
-                                            <i className="fab fa-instagram" />
-                                        </a>
-                                        <a className="btn btn-custom" href="">
-                                            <i className="fab fa-linkedin-in" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-6">
-                                <div className="footer-link">
-                                    <h2>Popular Links</h2>
-                                    <a href="">About Us</a>
-                                    <a href="">Contact Us</a>
-                                    <a href="">Popular Causes</a>
-                                    <a href="">Upcoming Events</a>
-                                    <a href="">Latest Blog</a>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-6">
-                                <div className="footer-link">
-                                    <h2>Useful Links</h2>
-                                    <a href="">Terms of use</a>
-                                    <a href="">Privacy policy</a>
-                                    <a href="">Cookies</a>
-                                    <a href="">Help</a>
-                                    <a href="">FQAs</a>
-                                </div>
-                            </div>
-                            <div className="col-lg-3 col-md-6">
-                                <div className="footer-newsletter">
-                                    <h2>Newsletter</h2>
-                                    <form>
-                                        <input className="form-control" placeholder="Email goes here" />
-                                        <button className="btn btn-custom">Submit</button>
-                                        <label>Don't worry, we don't spam!</label>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-    
-    
-                    {showModal && (
-                        <div
-                            className="modal show"
-                            tabIndex="-1"
-                            style={{
-                                display: "block",
-                                backgroundColor: "rgba(0, 0, 0, 0.5)",
-                            }}
-                        >
-                            <div className="modal-dialog">
-                                <div className="modal-content">
-                                    <div className="modal-header">
-                                        <h5 className="modal-title">Donate</h5>
-                                        <button
-                                            type="button"
-                                            className="btn-close"
-                                            onClick={() => setShowModal(false)}
-                                        ><b>X</b></button>
-                                    </div>
-                                    <div className="modal-body text-center">
-    
-                                        <form onSubmit={processDonation}>
-                                            <div className="form-group">
-                                                <label htmlFor="donations">set quantity</label>
-                                                <input
-                                                    type="text"
-                                                    className="form-control"
-                                                    id="donations"
-                                                    name="donations"
-                                                    // value={donations}
-                                                    onChange={(e) => { setAssignQuantity(e.target.value) }}
-                                                    required
-                                                />
-                                            </div>
-                                            <button type='submit'>donate</button>
-                                        </form>
-    
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button
-                                            type="button"
-                                            className="btn btn-secondary"
-                                            onClick={() => setShowModal(false)}
-                                        >
-                                            Close
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-    
-    
-    
-                    <div className="container copyright">
-                        <div className="row">
-                            <div className="col-md-6">
-                                <p>
-                                    © <a href="#">Your Site Name</a>, All Right Reserved.
-                                </p>
-                            </div>
-                            <div className="col-md-6">
-                                <p>
-                                    Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               <Footer/>
                 {/* Footer End */}
             </>
   )
