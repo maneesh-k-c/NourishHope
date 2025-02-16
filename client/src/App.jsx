@@ -17,6 +17,7 @@ import TakeDonation from './pages/orphanage/TakeDonation'
 import UpdateOrphanage from './pages/orphanage/UpdateOrphanage'
 import UpdateUser from './pages/user/UpdateUser'
 import UpdateRest from './pages/restaurant/UpdateRest'
+import Notification from './pages/user/Notification'
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
         <Route path="/add-orphanages" element={<AddOrphanage/>} />
         <Route path="/add-request" element={<AddRequest/>} />
         <Route path="/view-requests" element={<ViewRequests/>} />
+        <Route path="/notification" element={<Notification/>} />
 
         <Route path="/single-rest/:id" element={<SingleRestaurant/>} />  
         <Route path="/view-donations-restarant" element={<DonationsRestaurant/>} />  

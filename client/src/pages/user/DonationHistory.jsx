@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import NavBar from '../../components/navbar/NavBar'
-import { useParams } from 'react-router-dom'
-import axios from 'axios'
-import toast, { Toaster } from 'react-hot-toast';
-import QRCode from 'react-qr-code';
+  import React, { useEffect, useState } from 'react'
+  import NavBar from '../../components/navbar/NavBar'
+  import { useParams } from 'react-router-dom'
+  import axios from 'axios'
+  import toast, { Toaster } from 'react-hot-toast';
+  import QRCode from 'react-qr-code';
 
 export default function DonationHistory() {
   const [listDonations, setListDonations] = useState([])

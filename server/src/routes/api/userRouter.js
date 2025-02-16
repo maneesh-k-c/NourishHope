@@ -336,7 +336,7 @@ userRouter.put('/take_donation/:id', async (req, res) => {
         donation.orphanage_id[orphanageIndex].donated =
           (Number(donation.orphanage_id[orphanageIndex].donated) || 0) + Number(quantity);
       } else {
-        donation.orphanage_id.push({ orphanage: orphanage_id, donated: quantity });
+        donation.orphanage_id.push({ orphanage: orphanage_id, donated: quantity,status:0 });
       }
     }
     if(donation.quantity==='0'){

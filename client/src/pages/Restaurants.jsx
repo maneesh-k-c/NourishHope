@@ -104,11 +104,49 @@ export default function Restaurants() {
                                                 <i className="fa fa-map-marker-alt" />
                                                 {data?.address}
                                             </p>
+
                                         </div>
                                         <div className="event-text">
                                             <h3>{data?.restaurant_name}</h3>
+                                            Rating <br />
+                                            {[1, 2, 3, 4, 5].map((star) => {
+                                                let starType = "gray"; // Default gray star
+
+                                                if (data?.averageRating >= star) {
+                                                    starType = "gold"; // Fully filled star
+                                                } else if (data?.averageRating >= star - 0.5) {
+                                                    starType = "half"; // Half-filled star
+                                                }
+
+                                                return (
+                                                    <span
+                                                        key={star}
+                                                        onClick={() => handleRatingClick(star)}
+                                                        onMouseEnter={() => handleRatingHover(star)}
+                                                        onMouseLeave={() => setHover(0)}
+                                                        style={{
+                                                            fontSize: "24px",
+                                                            cursor: "pointer",
+                                                            color: starType === "gold" ? "gold" : "gray",
+                                                            position: "relative",
+                                                            display: "inline-block",
+                                                            width: "24px"
+                                                        }}
+                                                    >
+                                                        {starType === "half" ? (
+                                                            <>
+                                                                <span style={{ position: "absolute", overflow: "hidden", width: "43%", color:'gold' }}>★</span>
+                                                                <span style={{ color: "gray" }}>★</span>
+                                                            </>
+                                                        ) : (
+                                                            "★"
+                                                        )}
+                                                    </span>
+                                                );
+                                            })}
+
                                             <p>
-                                            {data?.description}
+                                                {data?.description}
                                             </p>
                                             {role == 'admin' ?
                                                 <a className="btn btn-custom btn-danger text-white"

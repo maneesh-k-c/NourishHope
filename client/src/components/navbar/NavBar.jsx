@@ -1,12 +1,35 @@
-import React, { useState } from 'react'
-
+import React, { useState,useEffect } from 'react'
+import axios from 'axios'
 export default function NavBar() {
+    
     const [role, setRole] = useState(localStorage.getItem('role'))
     console.log(role);
     //
     const logOut = () => {
         localStorage.clear()
         window.location.href = '/'
+    }
+    const [listDonations, setListDonations] = useState([])
+    console.log(listDonations);
+    
+    console.log(listDonations.filter((item) =>item?.orphanage_id?.some((data) => data?.status === 0)).length );
+
+  
+  
+    useEffect(() => {
+      const login_id = localStorage.getItem('loginId')
+      axios.get(`http://localhost:5000/api/rest/list_donations_user/${login_id}`).then((res) => {
+        setListDonations(res.data.data)
+      })
+    }, [])
+    const changeStatus = () => {
+        console.log('looo');
+        const login_id = localStorage.getItem('loginId')    
+        axios.put(`http://localhost:5000/api/rest/update_donations/${login_id}`).then((res) => {
+            console.log('updated');
+            
+          })    
+        window.location.href = '/view-donation-history'
     }
 
     return (
@@ -37,10 +60,39 @@ export default function NavBar() {
                                 <a href="/restaurants" className="nav-item nav-link">
                                     Restaurants
                                 </a>
-                                <a href="/view-donation-history" className="nav-item nav-link">
+                                <a  onClick={changeStatus} style={{position:'relative'}} className="nav-item nav-link">
                                     Donations
+                                    {listDonations.filter((item) =>item?.orphanage_id?.some((data) => data?.status === 0)).length>0?
+                                    <span style={{
+                                        position:'absolute',
+                                        top:'0',
+                                        right:'0',
+                                        backgroundColor:'red', 
+                                        borderRadius:'30%',
+                                        width:'20px',
+                                        display:'flex',
+                                        justifyContent:'center',
+                                        alignItems:'end',
+                                        padding:'2px',
+                                        }}>{listDonations.filter((item) =>item?.orphanage_id?.some((data) => data?.status === 0)).length}</span>: null
+                                    }
+                                    
                                 </a>
-                                   <a href="/profile" className="nav-item nav-link">
+                                {/* <a href="/notification" style={{position:'relative'}} className="nav-item nav-link">
+                                    Notification <span style={{
+                                        position:'absolute',
+                                        top:'0',
+                                        right:'0',
+                                        backgroundColor:'red', 
+                                        borderRadius:'30%',
+                                        width:'20px',
+                                        display:'flex',
+                                        justifyContent:'center',
+                                        alignItems:'end',
+                                        padding:'2px',
+                                        }}>10</span>
+                                </a> */}
+                                <a href="/profile" className="nav-item nav-link">
                                     Profile
                                 </a>
                                 {/* <a href="event.html" className="nav-item nav-link">
@@ -146,23 +198,23 @@ export default function NavBar() {
                                             Home
                                         </a>
                                         <div className="nav-item dropdown">
-                                        <a
-                                            href="#"
-                                            className="nav-link dropdown-toggle"
-                                            data-toggle="dropdown"
-                                        >
-                                            Manage Requests
-                                        </a>
-                                        <div className="dropdown-menu">
-                                            <a href="/add-request" className="dropdown-item">
-                                                Make Request
+                                            <a
+                                                href="#"
+                                                className="nav-link dropdown-toggle"
+                                                data-toggle="dropdown"
+                                            >
+                                                Manage Requests
                                             </a>
-                                            <a href="/view-requests" className="dropdown-item">
-                                                View Request
-                                            </a>
+                                            <div className="dropdown-menu">
+                                                <a href="/add-request" className="dropdown-item">
+                                                    Make Request
+                                                </a>
+                                                <a href="/view-requests" className="dropdown-item">
+                                                    View Request
+                                                </a>
 
+                                            </div>
                                         </div>
-                                    </div>
                                         <a href="/take-donation" className="nav-item nav-link active">
                                             Take Donation
                                         </a>

@@ -6,7 +6,12 @@ const restaurantSchema = new mongoose.Schema({
   mobile: { type: String, require: true },
   email: { type: String, require: true },
   description: { type: String},
-  rating: { type: Number, min: 1, max: 5 },
+  rating: [
+      {
+        userId: { type: mongoose.Types.ObjectId, ref: 'login_tb' },
+        value: { type: Number },
+      }
+    ],
   address: { type: String, require: true },
   upi: { type: String, require: true },
   restaurant_images: { type: [String], require: true },

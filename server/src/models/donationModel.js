@@ -7,10 +7,11 @@ const donationSchema = new mongoose.Schema({
     {
       orphanage: { type: mongoose.Types.ObjectId, ref: 'orphanage_tb' },
       donated: { type: String },
+      status:{type:Number},
       date: {
         type: Date,
         default: Date.now,
-      },
+      },      
     }
   ],
   food_type: { type: String, require: true },

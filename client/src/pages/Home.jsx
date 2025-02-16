@@ -8,6 +8,7 @@ import NavBar from '../components/navbar/NavBar';
 import DonateNow from '../components/donate/DonateNow';
 import Footer from '../components/navbar/Footer';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2'
 export default function Home() {
   const [showDonationModal, setShowDonationModal] = useState(false);
   const [orpDonationId, setOrpDonationId] = useState('');
@@ -15,19 +16,19 @@ export default function Home() {
   const [upi, setUpi] = useState('');
   const [showQrModal, setShowQrModal] = useState(false);
   const navigate = useNavigate();
-  const checkLogin = ()=>{
-    if(localStorage.getItem('loginId')===null){
+  const checkLogin = () => {
+    if (localStorage.getItem('loginId') === null) {
       navigate('/login');
     }
   }
   console.log(DonationAmount, orpDonationId, upi);
-  const saveDonation=()=>{
-    const data={
-      orphanage_id:orpDonationId,
-      amount:DonationAmount,
-      login_id : localStorage.getItem('loginId'),
+  const saveDonation = () => {
+    const data = {
+      orphanage_id: orpDonationId,
+      amount: DonationAmount,
+      login_id: localStorage.getItem('loginId'),
     }
-    axios.post('http://localhost:5000/api/user/add-donation',data).then((res) => {
+    axios.post('http://localhost:5000/api/user/add-donation', data).then((res) => {
       console.log(res.data.data)
     })
   }
@@ -65,6 +66,14 @@ export default function Home() {
       setCollection(res.data.data)
     })
   }, [])
+  const confirmation = () => {
+    setShowQrModal(false)
+    Swal.fire({
+      icon: "success",
+      title: "Success!",
+      text: "Payment completed!",
+    });
+  }
 
   return (
     <>
@@ -129,13 +138,13 @@ export default function Home() {
                     Nourish Hope – Empowering Communities, One Meal at a Time
                     A seamless platform connecting donors with orphanages for a brighter future.
                   </p>
-                {role!='admin'?
-                  <div className="carousel-btn">
-                  <a className="btn btn-custom" href="#donate-now">
-                    Donate Now
-                  </a>
+                  {role != 'admin' ?
+                    <div className="carousel-btn">
+                      <a className="btn btn-custom" href="#donate-now">
+                        Donate Now
+                      </a>
 
-                </div>:''}
+                    </div> : ''}
                 </div>
               </div>
 
@@ -585,269 +594,263 @@ export default function Home() {
         {/* Donate Start */}
 
 
-        {role!='admin'?
-        <DonateNow />:null}
-
-
-
-
-
+        {role != 'admin' ?
+          <DonateNow /> : null}
 
 
 
 
         {/* Donate End */}
         {/* Event Start */}
-        <div className="event">
-          <div className="container">
-            <div className="section-header text-center">
-              <p>Restaurants</p>
-              <h2>Giving liberates the soul of the giver</h2>
-            </div>
-            <div className="row">
 
-              {restaurant.slice(0, 2).map((data) => (
-                <div className="col-lg-6">
-                  <div className="event-item">
-                    <img src={data.restaurant_images[0]} style={{ height: '350px', width: '100%', objectFit: 'cover' }} alt="Image" />
-                    <div className="event-content">
-                      <div className="event-meta">
-                        <p>
-                          <i className="fa fa-calendar-alt" />
-                          01-Jan-45
-                        </p>
-                        <p>
-                          <i className="far fa-clock" />
-                          8:00 - 10:00
-                        </p>
-                        <p style={{ textWrap: 'auto' }}>
-                          <i className="fa fa-map-marker-alt" />
-                          {data?.address}
-                        </p>
-                      </div>
-                      <div className="event-text">
-                        <h3>{data?.restaurant_name}</h3>
-                        <p>
-                          Lorem ipsum dolor sit amet elit. Neca pretim miura bitur
-                          facili ornare velit non vulpte liqum metus tortor
-                        </p>
-                        <a className="btn btn-custom" href={`/single-rest/${data?._id}`}>
-                          View
-                        </a>
+        {role == 'user' || role == 'orphanage' ?
+          <div className="event">
+            <div className="container">
+              <div className="section-header text-center">
+                <p>Restaurants</p>
+                <h2>Giving liberates the soul of the giver</h2>
+              </div>
+              <div className="row">
+
+                {restaurant.slice(0, 2).map((data) => (
+                  <div className="col-lg-6">
+                    <div className="event-item">
+                      <img src={data.restaurant_images[0]} style={{ height: '350px', width: '100%', objectFit: 'cover' }} alt="Image" />
+                      <div className="event-content">
+                        <div className="event-meta">
+                          <p>
+                            <i className="fa fa-calendar-alt" />
+                            01-Jan-45
+                          </p>
+                          <p>
+                            <i className="far fa-clock" />
+                            8:00 - 10:00
+                          </p>
+                          <p>
+                          {[1, 2, 3, 4, 5].map((star) => {
+                                                let starType = "gray"; // Default gray star
+
+                                                if (data?.averageRating >= star) {
+                                                    starType = "gold"; // Fully filled star
+                                                } else if (data?.averageRating >= star - 0.5) {
+                                                    starType = "half"; // Half-filled star
+                                                }
+
+                                                return (
+                                                    <span
+                                                        key={star}
+                                                        onClick={() => handleRatingClick(star)}
+                                                        onMouseEnter={() => handleRatingHover(star)}
+                                                        onMouseLeave={() => setHover(0)}
+                                                        style={{
+                                                            fontSize: "24px",
+                                                            cursor: "pointer",
+                                                            color: starType === "gold" ? "gold" : "gray",
+                                                            position: "relative",
+                                                            display: "inline-block",
+                                                            width: "24px"
+                                                        }}
+                                                    >
+                                                        {starType === "half" ? (
+                                                            <>
+                                                                <span style={{ position: "absolute", overflow: "hidden", width: "43%", color:'gold' }}>★</span>
+                                                                <span style={{ color: "gray" }}>★</span>
+                                                            </>
+                                                        ) : (
+                                                            "★"
+                                                        )}
+                                                    </span>
+                                                );
+                                            })}
+                          </p>
+                          <p style={{ textWrap: 'auto' }}>
+                            <i className="fa fa-map-marker-alt" />
+                            {data?.address}
+                          </p>
+                        </div>
+                        <div className="event-text">
+                          <h3>{data?.restaurant_name}</h3>
+                          <p>
+                            Lorem ipsum dolor sit amet elit. Neca pretim miura bitur
+                            facili ornare velit non vulpte liqum metus tortor
+                          </p>
+                          <a className="btn btn-custom" href={`/single-rest/${data?._id}`}>
+                            View
+                          </a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-              ))}
-
+                ))}
 
 
+
+              </div>
             </div>
-          </div>
-        </div>
+          </div> : ''
+        }
+
+
+
         {/* Event End */}
 
+        {role == 'user' || role == 'restaurant' ?
 
-        {/* Blog Start */}
-        <div className="blog">
-          <div className="container">
-            <div className="section-header text-center">
-              <p>Orphanages</p>
-              <h2>Every orphan deserves love, care, and a chance to dream</h2>
-            </div>
-            <div className="row">
+          < div className="blog">
+            <div className="container">
+              <div className="section-header text-center">
+                <p>Orphanages</p>
+                <h2>Every orphan deserves love, care, and a chance to dream</h2>
+              </div>
+              <div className="row">
 
-              {orphanages.map((data) => (
-                <div className="col-lg-4">
-                  <div className="blog-item">
-                    <div className="blog-img">
-                      <img src={data?.orphanage_images[0]} alt="Image" />
-                    </div>
-                    <div className="blog-text">
-                      <h3>
-                        <a href="#">{data.orphanage_name}</a>
-                      </h3>
-                      <p>
-                        {data.address}
-                      </p>
-                    </div>
-                    <div className="blog-meta">
-                      <p>
-                        <i className="fa fa-phone" />
-                        <a href="">{data.mobile}</a><br />
-                        <i className="fa fa-envelope" />
-                        <a href="">{data.email}</a>
-                      </p>
-
-                    </div>
-                    <div className="blog-meta">
-                      <button className="btn btn-custom" onClick={() => { handleDonation(data._id), setUpi(data.upi),checkLogin() }}>Donate Money</button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-
-              {showDonationModal && (
-                // <div
-                //     className="modal show"
-                //     tabIndex="-1"
-                //     style={{
-                //         display: "block",
-                //         backgroundColor: "rgba(0, 0, 0, 0.5)",
-                //     }}
-                // >
-                //     <div className="modal-dialog">
-                //         <div className="modal-content">
-                //             <div className="modal-header">
-                //                 <h5 className="modal-title">Donate</h5>
-                //                 <button
-                //                     type="button"
-                //                     className="btn-close"
-                //                     onClick={() => setShowModal(false)}
-                //                 ><b>X</b></button>
-                //             </div>
-                //             <div className="modal-body text-center">
-
-                //                 <form onSubmit={processDonation}>
-                //                     <div className="form-group">
-                //                         <label htmlFor="donations">set quantity</label>
-                //                         <input
-                //                             type="text"
-                //                             className="form-control"
-                //                             id="donations"
-                //                             name="donations"
-                //                             // value={donations}
-                //                             onChange={(e) => { setAssignQuantity(e.target.value) }}
-                //                             required
-                //                         />
-                //                     </div>
-                //                     <button type='submit'>donate</button>
-                //                 </form>
-
-                //             </div>
-                //             <div className="modal-footer">
-                //                 <button
-                //                     type="button"
-                //                     className="btn btn-secondary"
-                //                     onClick={() => setShowModal(false)}
-                //                 >
-                //                     Close
-                //                 </button>
-                //             </div>
-                //         </div>
-                //     </div>
-                // </div>
-                <div
-                  className="modal show d-flex align-items-center justify-content-center"
-                  tabIndex="-1"
-                  style={{
-                    display: "block",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                    position: "fixed",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    zIndex: 1050, // Ensures it appears above other content
-                  }}
-                >
-                  <div className="modal-dialog modal-dialog-centered">
-                    <div className="modal-content" style={{ borderRadius: "10px", overflow: "hidden" }}>
-                      <div className="modal-header bg-primary text-white">
-                        <h5 className="modal-title">Donate Money</h5>
-                        <button
-                          type="button"
-                          className="btn-danger"
-                          onClick={() => setShowDonationModal(false)}
-                          style={{ color: "red", fontSize: "18px" }}
-                        >
-                          <b style={{ color: 'black' }}>X</b>
-                        </button>
+                {orphanages.map((data) => (
+                  <div className="col-lg-4">
+                    <div className="blog-item">
+                      <div className="blog-img">
+                        <img src={data?.orphanage_images[0]} alt="Image" />
                       </div>
-
-                      <div className="modal-body text-center p-4">
-                        <form>
-                          <div className="form-group mb-3">
-                            <label htmlFor="donations" className="form-label fw-bold">Enter Amount</label>
-                            <input
-                              type="number"
-                              className="form-control"
-                              id="donations"
-                              name="donations"
-                              onChange={(e) => setDonationAmount(e.target.value)}
-                              required
-                              value={DonationAmount}
-                              min='0'
-                              style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
-                            />
-                          </div>
-                          <button className="btn btn-success w-100" onClick={(e)=>{e.preventDefault(),setShowQrModal(true),setShowDonationModal(false),saveDonation()}}>Submit</button>
-                        </form>
+                      <div className="blog-text">
+                        <h3>
+                          <a href="#">{data.orphanage_name}</a>
+                        </h3>
+                        <p>
+                          {data.address}
+                        </p>
                       </div>
+                      <div className="blog-meta">
+                        <p>
+                          <i className="fa fa-phone" />
+                          <a href="">{data.mobile}</a><br />
+                          <i className="fa fa-envelope" />
+                          <a href="">{data.email}</a>
+                        </p>
 
-
-                    </div>
-                  </div>
-                </div>
-
-              )}
-
-              {showQrModal && (
-                <div
-                  className="modal show"
-                  tabIndex="-1"
-                  style={{
-                    display: "block",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                  }}
-                >
-                  <div className="modal-dialog">
-                    <div className="modal-content">
-                      <div className="modal-header">
-                        <h5 className="modal-title">Donate via UPI</h5>
-                        <button
-                          type="button"
-                          className="btn-close"
-                          onClick={() => setShowQrModal(false)}
-                        ></button>
                       </div>
-                      <div className="modal-body text-center">
-                        {upi ? (
-                          <>
-                            <p>
-                              Scan the QR code below or use a UPI app to make your
-                              donation.
-                            </p>
-                            <QRCode value={upi} size={200} />
-                            <p className="mt-3">
-                              <strong>Amount:</strong> ₹{DonationAmount}
-                            </p>
-                          </>
-                        ) : (
-                          <p className="text-danger">No UPI ID available.</p>
-                        )}
-                      </div>
-                      <div className="modal-footer">
-                        <button
-                          type="button"
-                          className="btn btn-secondary"
-                          onClick={() => setShowQrModal(false)}
-                        >
-                          Close
-                        </button>
+                      <div className="blog-meta">
+                        <button className="btn btn-custom" onClick={() => { handleDonation(data._id), setUpi(data.upi), checkLogin() }}>Donate Money</button>
                       </div>
                     </div>
                   </div>
-                </div>
-              )}
+                ))}
+
+                {showDonationModal && (
+
+                  <div
+                    className="modal show d-flex align-items-center justify-content-center"
+                    tabIndex="-1"
+                    style={{
+                      display: "block",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                      position: "fixed",
+                      top: 0,
+                      left: 0,
+                      width: "100%",
+                      height: "100%",
+                      zIndex: 1050, // Ensures it appears above other content
+                    }}
+                  >
+                    <div className="modal-dialog modal-dialog-centered">
+                      <div className="modal-content" style={{ borderRadius: "10px", overflow: "hidden" }}>
+                        <div className="modal-header bg-primary text-white">
+                          <h5 className="modal-title">Donate Money</h5>
+                          <button
+                            type="button"
+                            className="btn-danger"
+                            onClick={() => setShowDonationModal(false)}
+                            style={{ color: "red", fontSize: "18px" }}
+                          >
+                            <b style={{ color: 'black' }}>X</b>
+                          </button>
+                        </div>
+
+                        <div className="modal-body text-center p-4">
+                          <form>
+                            <div className="form-group mb-3">
+                              <label htmlFor="donations" className="form-label fw-bold">Enter Amount</label>
+                              <input
+                                type="number"
+                                className="form-control"
+                                id="donations"
+                                name="donations"
+                                onChange={(e) => setDonationAmount(e.target.value)}
+                                required
+                                value={DonationAmount}
+                                min='0'
+                                style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
+                              />
+                            </div>
+                            <button className="btn btn-success w-100" onClick={(e) => { e.preventDefault(), setShowQrModal(true), setShowDonationModal(false), saveDonation() }}>Submit</button>
+                          </form>
+                        </div>
+
+
+                      </div>
+                    </div>
+                  </div>
+
+                )}
+
+                {showQrModal && (
+                  <div
+                    className="modal show"
+                    tabIndex="-1"
+                    style={{
+                      display: "block",
+                      backgroundColor: "rgba(0, 0, 0, 0.5)",
+                    }}
+                  >
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h5 className="modal-title">Donate via UPI</h5>
+                          <button
+                            type="button"
+                            className="btn-close"
+                            onClick={() => setShowQrModal(false)}
+                          ></button>
+                        </div>
+                        <div className="modal-body text-center">
+                          {upi ? (
+                            <>
+                              <p>
+                                Scan the QR code below or use a UPI app to make your
+                                donation.
+                              </p>
+                              <QRCode value={upi} size={200} />
+                              <p className="mt-3">
+                                <strong>Amount:</strong> ₹{DonationAmount}
+                              </p>
+                            </>
+                          ) : (
+                            <p className="text-danger">No UPI ID available.</p>
+                          )}
+                        </div>
+                        <div className="modal-footer">
+                          <button
+                            type="button"
+                            className="btn btn-secondary"
+                            onClick={() => confirmation()}
+                          >
+                            Close
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
 
 
+              </div>
             </div>
           </div>
-        </div>
-        {/* Blog End */}
+
+          : ''
+        }
+
+
         {/* Footer Start */}
         <Footer />
         {/* Footer End */}

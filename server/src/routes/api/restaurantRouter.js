@@ -49,15 +49,19 @@ restaurantRouter.post('/submitfeedback', async (req, res) => {
                 message: 'Feedback text and userId are required',
             });
         }
-        const updateRest = await restaurantData.updateOne({_id:restaurantId},{$set:{rating:rating}})
+
+        const totalReviews = await restaurantData.findOne({_id:restaurantId});
+        console.log(totalReviews);
+
+        totalReviews.rating.push({ userId: userLoginId, value: rating });
+        await totalReviews.save();
+        // const updateRest = await restaurantData.updateOne({_id:restaurantId},{$set:{rating:averageRating}})
 
         const feedback = new Feedback({
             feedbackText,
             userLoginId,
             restaurantId,
-            rating
         });
-
         await feedback.save();
 
         res.status(200).json({
@@ -299,6 +303,100 @@ restaurantRouter.get('/list_donations_orp/', async (req, res) => {
         });
     }
 });
+
+// restaurantRouter.get('/update_donations/:login_id', async (req, res) => {
+//     try {
+//         const { login_id } = req.params;
+
+//         if (!mongoose.Types.ObjectId.isValid(login_id)) {
+//             return res.status(400).json({
+//                 Success: false,
+//                 Error: true,
+//                 Message: 'Invalid login_id',
+//             });
+//         }
+       
+                                        
+
+//         const donations = await donationData.find({ login_id: login_id })
+           
+//             if (donations.length > 0 && donations[0].login_id) {
+//                 for (let i = 0; i < donations.length; i++) {
+//                     if (donations[i].orphanage_id) { // Ensure login_id is not null
+//                         const userDatas = await userData.updateOne({ login_id: donations[i]?.login_id?._id });
+//                         donations[i] = { ...donations[i]._doc, user: userDatas }; // Correct way to add user data
+//                     }
+//                 }
+                
+               
+//             return res.status(200).json({
+//                 Success: true,
+//                 Error: false,
+//                 data: donations,
+//             });
+//         }
+
+//         if (!donations.length) {
+//             return res.status(404).json({
+//                 Success: false,
+//                 Error: true,
+//                 Message: 'No donations found for this restaurant',
+//             });
+//         }
+
+
+
+//     } catch (error) {
+//         console.error('Error fetching donations:', error);
+//         return res.status(500).json({
+//             Success: false,
+//             Error: true,
+//             Message: 'Internal Server Error',
+//             Details: error,
+//         });
+//     }
+// });
+
+restaurantRouter.put('/update_donations/:loginId', async (req, res) => {
+    try {
+        const { loginId } = req.params;
+
+        const updatedData = await donationData.updateMany(
+            { login_id: loginId, "orphanage_id.status": { $exists: true } }, // Ensures field exists
+            { 
+                $set: { "orphanage_id.$[].status": 1 } // Update all orphanage_id.status fields
+            }
+        );
+
+        console.log(updatedData);
+
+        if (updatedData.matchedCount === 0) {
+            return res.status(404).json({
+                Success: false,
+                Error: true,
+                Message: "No matching records found for the given login_id."
+            });
+        }
+
+        return res.status(200).json({
+            Success: true,
+            Error: false,
+            Message: "Status updated successfully.",
+            UpdatedCount: updatedData.modifiedCount
+        });
+
+    } catch (error) {
+        console.error("Error updating status:", error);
+        return res.status(500).json({
+            Success: false,
+            Error: true,
+            Message: "Something went wrong.",
+        });
+    }
+});
+
+
+
 
 
 module.exports = restaurantRouter

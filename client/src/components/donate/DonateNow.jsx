@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import QRCode from 'react-qr-code';
+import Swal from 'sweetalert2'
 
 export default function DonateNow() {
     const [restaurant, setRestaurant] = useState("");
@@ -49,6 +50,15 @@ export default function DonateNow() {
 
     const donationAmount = donations * 100; // Fixed donation per unit
     const upiUrl = `upi://pay?pa=${upiId}&pn=${restaurant}&am=${donationAmount}&cu=INR`;
+
+    const confirmation =()=>{
+        setShowModal(false)
+        Swal.fire({
+            icon: "success",
+            title: "Success!",
+            text: "Payment completed!",
+          });
+    } 
 
     return (
         <div
@@ -176,7 +186,7 @@ export default function DonateNow() {
                                 <button
                                     type="button"
                                     className="btn btn-secondary"
-                                    onClick={() => setShowModal(false)}
+                                    onClick={() => confirmation()}
                                 >
                                     Close
                                 </button>

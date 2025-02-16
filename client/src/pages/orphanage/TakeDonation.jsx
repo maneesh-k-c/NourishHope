@@ -195,55 +195,7 @@ export default function TakeDonation() {
 
 
                 {showModal && (
-                    // <div
-                    //     className="modal show"
-                    //     tabIndex="-1"
-                    //     style={{
-                    //         display: "block",
-                    //         backgroundColor: "rgba(0, 0, 0, 0.5)",
-                    //     }}
-                    // >
-                    //     <div className="modal-dialog">
-                    //         <div className="modal-content">
-                    //             <div className="modal-header">
-                    //                 <h5 className="modal-title">Donate</h5>
-                    //                 <button
-                    //                     type="button"
-                    //                     className="btn-close"
-                    //                     onClick={() => setShowModal(false)}
-                    //                 ><b>X</b></button>
-                    //             </div>
-                    //             <div className="modal-body text-center">
-
-                    //                 <form onSubmit={processDonation}>
-                    //                     <div className="form-group">
-                    //                         <label htmlFor="donations">set quantity</label>
-                    //                         <input
-                    //                             type="text"
-                    //                             className="form-control"
-                    //                             id="donations"
-                    //                             name="donations"
-                    //                             // value={donations}
-                    //                             onChange={(e) => { setAssignQuantity(e.target.value) }}
-                    //                             required
-                    //                         />
-                    //                     </div>
-                    //                     <button type='submit'>donate</button>
-                    //                 </form>
-
-                    //             </div>
-                    //             <div className="modal-footer">
-                    //                 <button
-                    //                     type="button"
-                    //                     className="btn btn-secondary"
-                    //                     onClick={() => setShowModal(false)}
-                    //                 >
-                    //                     Close
-                    //                 </button>
-                    //             </div>
-                    //         </div>
-                    //     </div>
-                    // </div>
+                    
                     <div
                         className="modal show d-flex align-items-center justify-content-center"
                         tabIndex="-1"

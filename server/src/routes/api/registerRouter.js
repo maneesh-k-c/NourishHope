@@ -7,6 +7,7 @@ const multer = require('multer');
 const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const userData = require('../../models/userModel');
 const orphanageData = require('../../models/orphanageModel');
+const Feedback = require('../../models/feedbackModel');
 const cloudinary = require('cloudinary').v2;
 require('dotenv').config();
 cloudinary.config({
@@ -160,6 +161,7 @@ registerRouter.post('/restaurant', uploadImage.array('image', 1), async (req, re
             mobile: req.body.mobile,
             email: req.body.email,
             upi: req.body.upi,
+            rating:[],
             address: req.body.address,
             description: req.body.description,
             restaurant_images: req.files ? req.files.map((file) => file.path) : null,
@@ -189,32 +191,79 @@ registerRouter.post('/restaurant', uploadImage.array('image', 1), async (req, re
     }
 });
 
+// registerRouter.get('/getrestaurant', async (req, res) => {
+//     try {
+//         const result = await restaurantData.find().populate('login_id');
+//         // const Rating = result.rating.length
+//         // const totalRating = result.reduce((sum, rating) => sum + result.rating, 0);
+//         // const averageRating = (totalRating / totalReviews).toFixed(1);
+//         if (result[0]) {
+//             return res.status(200).json({
+//                 Success: true,
+//                 Error: false,
+//                 data: result,
+//                 Message: 'Data Found',
+//             });
+//         }
+//         else {
+//             return res.status(400).json({
+//                 Success: false,
+//                 Error: true,
+//                 Message: 'Data Not Found',
+//             });
+//         }
+//     } catch (error) {
+//         return res.status(500).json({
+//             Success: false,
+//             Error: true,
+//             Message: 'Something went wrong',
+//         });
+//     }
+// })
+
 registerRouter.get('/getrestaurant', async (req, res) => {
     try {
         const result = await restaurantData.find().populate('login_id');
-        if (result[0]) {
-            return res.status(200).json({
-                Success: true,
-                Error: false,
-                data: result,
-                Message: 'Data Found',
-            });
-        }
-        else {
+
+        if (!result.length) {
             return res.status(400).json({
                 Success: false,
                 Error: true,
                 Message: 'Data Not Found',
             });
         }
+
+        // Map through restaurants and calculate the total & average rating
+        const formattedResult = result.map(restaurant => {
+            const totalReviews = restaurant.rating.length;
+            const totalRating = restaurant.rating.reduce((sum, r) => sum + r.value, 0);
+            const averageRating = totalReviews > 0 ? (totalRating / totalReviews).toFixed(1) : "No Ratings";
+
+            return {
+                ...restaurant.toObject(), // Convert Mongoose document to plain object
+                totalReviews,
+                totalRating,
+                averageRating
+            };
+        });
+
+        return res.status(200).json({
+            Success: true,
+            Error: false,
+            data: formattedResult,
+            Message: 'Data Found',
+        });
+
     } catch (error) {
+        console.error("Error fetching restaurants:", error);
         return res.status(500).json({
             Success: false,
             Error: true,
             Message: 'Something went wrong',
         });
     }
-})
+});
+
 
 registerRouter.post('/orphanage', uploadImage.array('orphanage_images', 1), async (req, res, next) => {
     try {
