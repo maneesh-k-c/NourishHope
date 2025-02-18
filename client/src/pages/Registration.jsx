@@ -218,7 +218,7 @@ export default function Registration() {
             formDataToSend.append('address', formRestData.address);
             formDataToSend.append('image', formRestData.image);
             formDataToSend.append('username', formRestData.username);
-            formDataToSend.append('password', formRestData.password);
+            formDataToSend.append('password', formRestData.password);       
            
             axios.post('http://localhost:5000/api/auth/restaurant', formDataToSend).then((res) => {
                 toast.success(res.data.Message)
@@ -351,6 +351,7 @@ export default function Registration() {
                                                 placeholder="Image"
                                                 style={{ borderColor: errors.image ? '#dc3545' : '' }}
                                                 onChange={handleFileChange}
+                                                accept=".jpg, .jpeg, .png"
                                             />
                                             {errors.image && <div className="invalid-feedback" style={{
                                                 position: 'absolute',
@@ -494,6 +495,7 @@ export default function Registration() {
                                             <input
                                                 type="file"
                                                 name="image"
+                                                accept=".jpg, .jpeg, .png"
                                                 className={`form-control ${resterrors.image ? 'is-invalid' : ''}`}
                                                 placeholder="Image"
                                                 style={{ borderColor: resterrors.image ? '#dc3545' : '' }}

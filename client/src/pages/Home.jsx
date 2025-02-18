@@ -12,7 +12,7 @@ import Swal from 'sweetalert2'
 export default function Home() {
   const [showDonationModal, setShowDonationModal] = useState(false);
   const [orpDonationId, setOrpDonationId] = useState('');
-  const [DonationAmount, setDonationAmount] = useState(0);
+  const [DonationAmount, setDonationAmount] = useState(1);
   const [upi, setUpi] = useState('');
   const [showQrModal, setShowQrModal] = useState(false);
   const navigate = useNavigate();
@@ -627,41 +627,41 @@ export default function Home() {
                             8:00 - 10:00
                           </p>
                           <p>
-                          {[1, 2, 3, 4, 5].map((star) => {
-                                                let starType = "gray"; // Default gray star
+                            {[1, 2, 3, 4, 5].map((star) => {
+                              let starType = "gray"; // Default gray star
 
-                                                if (data?.averageRating >= star) {
-                                                    starType = "gold"; // Fully filled star
-                                                } else if (data?.averageRating >= star - 0.5) {
-                                                    starType = "half"; // Half-filled star
-                                                }
+                              if (data?.averageRating >= star) {
+                                starType = "gold"; // Fully filled star
+                              } else if (data?.averageRating >= star - 0.5) {
+                                starType = "half"; // Half-filled star
+                              }
 
-                                                return (
-                                                    <span
-                                                        key={star}
-                                                        onClick={() => handleRatingClick(star)}
-                                                        onMouseEnter={() => handleRatingHover(star)}
-                                                        onMouseLeave={() => setHover(0)}
-                                                        style={{
-                                                            fontSize: "24px",
-                                                            cursor: "pointer",
-                                                            color: starType === "gold" ? "gold" : "gray",
-                                                            position: "relative",
-                                                            display: "inline-block",
-                                                            width: "24px"
-                                                        }}
-                                                    >
-                                                        {starType === "half" ? (
-                                                            <>
-                                                                <span style={{ position: "absolute", overflow: "hidden", width: "43%", color:'gold' }}>★</span>
-                                                                <span style={{ color: "gray" }}>★</span>
-                                                            </>
-                                                        ) : (
-                                                            "★"
-                                                        )}
-                                                    </span>
-                                                );
-                                            })}
+                              return (
+                                <span
+                                  key={star}
+                                  onClick={() => handleRatingClick(star)}
+                                  onMouseEnter={() => handleRatingHover(star)}
+                                  onMouseLeave={() => setHover(0)}
+                                  style={{
+                                    fontSize: "24px",
+                                    cursor: "pointer",
+                                    color: starType === "gold" ? "gold" : "gray",
+                                    position: "relative",
+                                    display: "inline-block",
+                                    width: "24px"
+                                  }}
+                                >
+                                  {starType === "half" ? (
+                                    <>
+                                      <span style={{ position: "absolute", overflow: "hidden", width: "43%", color: 'gold' }}>★</span>
+                                      <span style={{ color: "gray" }}>★</span>
+                                    </>
+                                  ) : (
+                                    "★"
+                                  )}
+                                </span>
+                              );
+                            })}
                           </p>
                           <p style={{ textWrap: 'auto' }}>
                             <i className="fa fa-map-marker-alt" />
@@ -768,18 +768,27 @@ export default function Home() {
                         <div className="modal-body text-center p-4">
                           <form>
                             <div className="form-group mb-3">
-                              <label htmlFor="donations" className="form-label fw-bold">Enter Amount</label>
+                              <label htmlFor="donations" className="form-label fw-bold">Enter Amount (0 - 5000)</label>
                               <input
                                 type="number"
                                 className="form-control"
                                 id="donations"
                                 name="donations"
-                                onChange={(e) => setDonationAmount(e.target.value)}
+                                onChange={(e) => {
+                                  let value = Number(e.target.value);
+                                  if (value >= 4999) value = 5000;
+                                  if (value < 0) value = '';
+                                  if (!value) value = '';
+                                  setDonationAmount(value);
+                                }}
                                 required
+                                placeholder='max amount is 5000'
                                 value={DonationAmount}
-                                min='0'
+                                min="1"
+                                max="4999"
                                 style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
                               />
+
                             </div>
                             <button className="btn btn-success w-100" onClick={(e) => { e.preventDefault(), setShowQrModal(true), setShowDonationModal(false), saveDonation() }}>Submit</button>
                           </form>
