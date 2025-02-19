@@ -776,16 +776,16 @@ export default function Home() {
                                 name="donations"
                                 onChange={(e) => {
                                   let value = Number(e.target.value);
-                                  if (value >= 4999) value = 5000;
-                                  if (value < 0) value = '';
-                                  if (!value) value = '';
+                                  // if (value >= 4999) value = 5000;
+                                  // if (value < 0) value = '';
+                                  // if (!value) value = '';
                                   setDonationAmount(value);
                                 }}
                                 required
-                                placeholder='max amount is 5000'
+                                // placeholder='max amount is 5000' 
                                 value={DonationAmount}
                                 min="1"
-                                max="4999"
+                               
                                 style={{ padding: "10px", borderRadius: "5px", border: "1px solid #ccc" }}
                               />
 

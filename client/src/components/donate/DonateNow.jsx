@@ -45,20 +45,24 @@ export default function DonateNow() {
         }
         axios.post("http://localhost:5000/api/user/make_donation", formData).then((res) => {
             console.log(res.data);
+            setDonations('')
+            setRestaurant('')
+            setFoodtype('')
         })
+        
     };
 
     const donationAmount = donations * 100; // Fixed donation per unit
     const upiUrl = `upi://pay?pa=${upiId}&pn=${restaurant}&am=${donationAmount}&cu=INR`;
 
-    const confirmation =()=>{
+    const confirmation = () => {
         setShowModal(false)
         Swal.fire({
             icon: "success",
             title: "Success!",
             text: "Payment completed!",
-          });
-    } 
+        });
+    }
 
     return (
         <div
@@ -124,10 +128,13 @@ export default function DonateNow() {
                                         className="form-control"
                                         placeholder="No of donations"
                                         value={donations}
-
+                                        max="500"
                                         onChange={(e) => {
-                                            const value = e.target.value;
+                                            let value = e.target.value;
                                             if (value === '' || /^[1-9]\d*$/.test(value)) {
+                                                if (value >= 499) value = 500;
+                                                if (value < 0) value = '';
+                                                if (!value) value = '';
                                                 setDonations(value)
                                             }
                                         }}

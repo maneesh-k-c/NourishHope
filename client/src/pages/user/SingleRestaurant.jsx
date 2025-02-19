@@ -165,16 +165,9 @@ export default function SingleRestaurant() {
                             <div className="col-lg-8">
                                 <div className="single-content">
                                     <img src={restaurant?.restaurant_images?.length > 0 ? restaurant.restaurant_images[0] : 'fallback-image.jpg'} />
-                                    <h2>Lorem ipsum dolor sit amet</h2>
+                                    <h2>Description</h2>
                                     <p>
-                                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-                                        molestie, lorem eu eleifend bibendum, augue purus mollis sapien,
-                                        non rhoncus eros leo in nunc. Donec a nulla vel turpis consectetur
-                                        tempor ac vel justo. In hac habitasse platea dictumst. Cras nec
-                                        sollicitudin eros. Nunc eu enim non turpis sagittis rhoncus
-                                        consectetur id augue. Mauris dignissim neque felis. Phasellus
-                                        mollis mi a pharetra cursus. Maecenas vulputate augue placerat
-                                        lacus mattis, nec ornare risus sollicitudin.
+                                       {restaurant.description}
                                     </p>
 
 
