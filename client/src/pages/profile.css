@@ -12,7 +12,7 @@
 }
 .profile-image-profile{
 	border-radius: 10px;
-	border: 2px solid #5957f9;
+	border: 2px solid #ffcc00;
 }
 .name-profile{
 	font-size: 25px;
@@ -35,10 +35,10 @@
 
 }
 .middle-container-profile:hover {
-	border: 1px solid #5957f9;
+	border: 1px solid #f9de57;
 }
 .dollar-div-profile{
-	background-color: #5957f9;
+	background-color: #f9de57;
 	padding: 12px;
 	border-radius: 10px;
 }
@@ -54,7 +54,7 @@
 }
 .dollar-profile{
 	font-size: 16px !important;
-	color: #5957f9 !important;
+	color: #f9de57 !important;
 	font-weight: bold !important;
 }
 
@@ -65,7 +65,7 @@
 	font-weight: bold;
 }
 .amount-profile{
-	color: #5957f9;
+	color: #272727;
 	font-size: 16px;
 	font-weight: bold;
 }
@@ -76,7 +76,7 @@
 }
 
 .recent-border-profile{
-	border-left: 2px solid #5957f9;
+	border-left: 2px solid #f9de57;
 	display: flex;
 	align-items: center;
 
