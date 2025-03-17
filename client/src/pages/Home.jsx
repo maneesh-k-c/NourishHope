@@ -232,7 +232,7 @@ export default function Home() {
                 <div
                   className="about-img"
                   data-parallax="scroll"
-                  data-image-src="img/about.jpg"
+                  data-image-src="img/orphanage.jpg"
                 />
               </div>
               <div className="col-lg-6">
