@@ -259,7 +259,7 @@ export default function Registration() {
                                     <p>
                                     Register now to be part of a meaningful initiative that connects restaurants, orphanages, and donors.
                                     By signing up, you can donate food or funds to support orphanages, partner with restaurants to make a difference, track your contributions and impact in real-time, and receive instant notifications and updates. 
-                                    Every small act of kindness counts. Sign up today and help us spread hope
+                                    Every small act of kindness counts. Sign up today and help us spread hope.
                                     </p>
                                 </div>
                             </div>

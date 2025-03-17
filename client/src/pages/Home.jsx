@@ -130,7 +130,7 @@ export default function Home() {
             <OwlCarousel className="owl-carousel" {...options}>
               <div className="carousel-item">
                 <div className="carousel-img">
-                  <img src={"/img/carousel-1.jpg"} alt="Image" />
+                  <img src={"/img/carosal1.jpg"} alt="Image" />
                 </div>
                 <div className="carousel-text">
                   <h1>Bridging generosity with those in need</h1>
