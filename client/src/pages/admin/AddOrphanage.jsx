@@ -102,11 +102,11 @@ export default function AddOrphanage() {
                             <div className="top-bar-left">
                                 <div className="text">
                                     <i className="fa fa-phone-alt" />
-                                    <p>+123 456 7890</p>
+                                    <p>+91 1234567890</p>
                                 </div>
                                 <div className="text">
                                     <i className="fa fa-envelope" />
-                                    <p>info@example.com</p>
+                                    <p>nourishhope2025@gmail.com</p>
                                 </div>
                             </div>
                         </div>
