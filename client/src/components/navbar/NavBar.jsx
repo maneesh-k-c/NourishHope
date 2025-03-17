@@ -124,7 +124,7 @@ export default function NavBar() {
                     <div className="navbar navbar-expand-lg bg-dark navbar-dark">
                         <div className="container-fluid">
                             <a href="/" className="navbar-brand">
-                                Helpz
+                            NOURISH HOPE
                             </a>
                             <button
                                 type="button"
@@ -179,7 +179,7 @@ export default function NavBar() {
                                     </a>
 
 
-                                    <a href="/login" className="nav-item nav-link">
+                                    <a onClick={logOut} className="nav-item nav-link">
                                         Logout
                                     </a>
                                 </div>
@@ -191,7 +191,7 @@ export default function NavBar() {
                         <div className="navbar navbar-expand-lg bg-dark navbar-dark">
                             <div className="container-fluid">
                                 <a href="index.html" className="navbar-brand">
-                                    Helpz
+                                    NOURISH HOPE
                                 </a>
                                 <button
                                     type="button"
@@ -249,7 +249,7 @@ export default function NavBar() {
                             <div className="navbar navbar-expand-lg bg-dark navbar-dark">
                                 <div className="container-fluid">
                                     <a href="index.html" className="navbar-brand">
-                                        Helpz
+                                    NOURISH HOPE
                                     </a>
                                     <button
                                         type="button"
@@ -291,7 +291,7 @@ export default function NavBar() {
                             <div className="navbar navbar-expand-lg bg-dark navbar-dark">
                                 <div className="container-fluid">
                                     <a href="index.html" className="navbar-brand">
-                                        Helpz
+                                    NOURISH HOPE
                                     </a>
                                     <button
                                         type="button"
