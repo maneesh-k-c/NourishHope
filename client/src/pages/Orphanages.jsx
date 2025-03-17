@@ -109,7 +109,7 @@ export default function Orphanages() {
                                 <div className="event-text"> 
                                     <h3>{orphanage?.orphanage_name}</h3>
                                     <p>
-                                        Lorem ipsum dolor sit amet elit. Neca pretim miura bitur
+                                        {/* Lorem ipsum dolor sit amet elit. Neca pretim miura bitur */}
                                     </p>
                                     <a className="btn btn-custom btn-danger text-white" onClick={()=>{handleDelete(orphanage._id)}}>
                                         Delete
