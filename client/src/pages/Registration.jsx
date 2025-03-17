@@ -257,11 +257,9 @@ export default function Registration() {
                                 </div>
                                 <div className="volunteer-text">
                                     <p>
-                                        Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
-                                        Curabitur facilisis ornare velit non. Aliquam metus tortor,
-                                        auctor id gravida, viverra quis sem. Curabitur non nisl nec nisi
-                                        maximus. Aenean convallis porttitor. Aliquam interdum at lacus
-                                        non blandit.
+                                    Register now to be part of a meaningful initiative that connects restaurants, orphanages, and donors.
+                                    By signing up, you can donate food or funds to support orphanages, partner with restaurants to make a difference, track your contributions and impact in real-time, and receive instant notifications and updates. 
+                                    Every small act of kindness counts. Sign up today and help us spread hope
                                     </p>
                                 </div>
                             </div>
