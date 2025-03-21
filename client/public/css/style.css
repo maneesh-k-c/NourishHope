@@ -36,7 +36,7 @@ a:focus {
    font-size: 16px;
     font-weight: 500;
     color: #777777;
-    border-radius: 0;
+    border-radius: 20px;
     border: 2px solid #FDBE33;
     box-shadow: inset 0 0 0 0 #FDBE33;
     transition: ease-out 0.3s;
@@ -47,6 +47,7 @@ a:focus {
 .btn.btn-custom:hover {
     color: #20212B;
     box-shadow: inset 0 0 0 30px #FDBE33;
+    border-radius: 20px;
 }
 
 .btn:focus,
@@ -406,6 +407,7 @@ a:focus {
 
 .carousel .carousel-btn .btn.btn-custom {
     color: #ffffff;
+    border-radius: 20px;
 }
 
 .carousel .carousel-btn .btn.btn-custom:hover {
@@ -831,7 +833,7 @@ a:focus {
     height: 60px;
     color: #ffffff;
     padding: 0 15px;
-    border-radius: 10px;
+    border-radius: 20px;
     border: 1px solid #ffffff;
     background: transparent;
 }
@@ -850,12 +852,14 @@ a:focus {
     display: flex;
     justify-content: space-between;
     margin-bottom: 15px;
+    border-radius: 20px;
 }
 
 .donate .donate-form .btn.btn-custom {
     padding: 15px 0;
     width: 100%;
     height: 60px;
+    border-radius: 20px;
     color: #ffffff;
     border: 1px solid #ffffff;
     box-shadow: inset 0 0 0 0 #ffffff;
@@ -865,6 +869,7 @@ a:focus {
 .donate .donate-form .btn.btn-custom.active {
     color: #FDBE33;
     border: 1px solid #ffffff;
+    border-radius: 20px;
     box-shadow: inset 0 0 0 30px #ffffff;
 }
 
@@ -1262,7 +1267,7 @@ a:focus {
     height: 60px;
     color: #ffffff;
     padding: 0 15px;
-    border-radius: 10px;
+    border-radius: 20px;
     border: 1px solid #ffffff;
     background: transparent;
 }
@@ -1270,7 +1275,7 @@ a:focus {
 .volunteer .volunteer-form textarea.form-control {
     height: 120px;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 20px;
 }
 
 .volunteer .volunteer-form .form-control::placeholder {
@@ -1287,6 +1292,7 @@ a:focus {
     padding: 15px 0;
     width: 100%;
     height: 60px;
+    border-radius: 20px;
     color: #ffffff;
     border: 1px solid #ffffff;
     box-shadow: inset 0 0 0 0 #ffffff;
@@ -1295,6 +1301,7 @@ a:focus {
 .volunteer .volunteer-form .btn.btn-custom:hover {
     color: #FDBE33;
     border: 1px solid #ffffff;
+    border-radius: 20px;
     box-shadow: inset 0 0 0 30px #ffffff;
 }
 
@@ -1384,6 +1391,7 @@ a:focus {
 .event .btn.btn-custom {
     margin-top: 20px;
     padding: 8px 30px;
+    border-radius: 20px;
 }
 
 @media (max-width: 575.98px) {
@@ -1579,6 +1587,7 @@ a:focus {
 
 .contact .contact-form .btn.btn-custom {
     width: 100%;
+    border-radius: 20px;
 }
 
 .contact .help-block ul {
@@ -2113,6 +2122,7 @@ a:focus {
 .footer .footer-newsletter .btn.btn-custom {
     width: 100%;
     padding: 15px 0;
+    border-radius: 20px;
 }
 
 .footer .copyright {
