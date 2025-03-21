@@ -92,14 +92,6 @@ export default function Restaurants() {
                                     <img src={data.restaurant_images[0]} alt="Image" />
                                     <div className="event-content">
                                         <div className="event-meta">
-                                            <p>
-                                                <i className="fa fa-calendar-alt" />
-                                                01-Jan-45
-                                            </p>
-                                            <p>
-                                                <i className="far fa-clock" />
-                                                8:00 - 10:00
-                                            </p>
                                             <p style={{ textWrap: 'auto' }}>
                                                 <i className="fa fa-map-marker-alt" />
                                                 {data?.address}
