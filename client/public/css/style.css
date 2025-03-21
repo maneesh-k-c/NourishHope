@@ -863,6 +863,7 @@ a:focus {
     color: #ffffff;
     border: 2px solid #ffffff;
     box-shadow: inset 0 0 0 0 #ffffff;
+    background-color: #3d6f1b;
 }
 
 .donate .donate-form .btn.btn-custom:hover,
@@ -1296,6 +1297,7 @@ a:focus {
     color: #ffffff;
     border: 2px solid #ffffff;
     box-shadow: inset 0 0 0 0 #ffffff;
+    background-color: #3d6f1b;
 }
 
 .volunteer .volunteer-form .btn.btn-custom:hover {
