@@ -29,21 +29,25 @@ export default function Feedbacks() {
 
     const deleteFeedback = (id) => {
         Swal.fire({
-            title: "Do you want logout?",
+            title: "Do you want to delete this feedback?",
             showDenyButton: true,
             confirmButtonText: "Yes",
-            denyButtonText: `No`
+            denyButtonText: "No"
         }).then((result) => {
-            /* Read more about isConfirmed, isDenied below */
-            axios.get(`http://localhost:5000/api/rest/delete_feedback/${id}`)
-                .then(res => {
-                    const filterData = allFeedbacks.filter((item) => item._id !== id);
-                    setAllFeedbacks(filterData)
-                    toast.success('Feedback Deleted Successfully')
-                })
+            if (result.isConfirmed) {
+                axios.get(`http://localhost:5000/api/rest/delete_feedback/${id}`)
+                    .then(res => {
+                        const filterData = allFeedbacks.filter((item) => item._id !== id);
+                        setAllFeedbacks(filterData);
+                        toast.success("Feedback Deleted Successfully");
+                    })
+                    .catch((err) => {
+                        toast.error("Failed to delete feedback");
+                    });
+            }
         });
-
-    }
+    };
+    
     return (
         <>
             <Toaster
