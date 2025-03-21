@@ -619,14 +619,6 @@ export default function Home() {
                       <div className="event-content">
                         <div className="event-meta">
                           <p>
-                            <i className="fa fa-calendar-alt" />
-                            01-Jan-45
-                          </p>
-                          <p>
-                            <i className="far fa-clock" />
-                            8:00 - 10:00
-                          </p>
-                          <p>
                             {[1, 2, 3, 4, 5].map((star) => {
                               let starType = "gray"; // Default gray star
 
