@@ -4,6 +4,7 @@ import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
 import NavBar from '../../components/navbar/NavBar';
 import Footer from '../../components/navbar/Footer';
+import Swal from 'sweetalert2'
 export default function Feedbacks() {
     const [allFeedbacks, setAllFeedbacks] = useState([]);
     console.log(allFeedbacks);
@@ -13,16 +14,36 @@ export default function Feedbacks() {
         axios.get(`http://localhost:5000/api/rest/viewfeedback`)
             .then(res => {
                 const role = localStorage.getItem('role')
+                console.log(res);
+
                 if (role == 'admin') {
                     setAllFeedbacks(res.data.data)
                 } else if (role == 'user') {
                     const filterData = res.data.data.filter((item) => item.restaurantId.login_id === login_id);
                     setAllFeedbacks(filterData)
-                }else{
+                } else {
                     setAllFeedbacks(res.data.data)
                 }
             });
     }, [login_id])
+
+    const deleteFeedback = (id) => {
+        Swal.fire({
+            title: "Do you want logout?",
+            showDenyButton: true,
+            confirmButtonText: "Yes",
+            denyButtonText: `No`
+        }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            axios.get(`http://localhost:5000/api/rest/delete_feedback/${id}`)
+                .then(res => {
+                    const filterData = allFeedbacks.filter((item) => item._id !== id);
+                    setAllFeedbacks(filterData)
+                    toast.success('Feedback Deleted Successfully')
+                })
+        });
+
+    }
     return (
         <>
             <Toaster
@@ -101,7 +122,8 @@ export default function Feedbacks() {
                                         <h3>{feedback.userLoginId?.username}</h3>
                                         <p>
                                             {feedback.feedbackText}
-                                        </p>
+                                        </p><br />
+                                        <button className='btn btn-custom btn-danger text-white' onClick={() => deleteFeedback(feedback._id)}>Delete</button>
                                         <p style={{ position: 'absolute', top: '0', right: '-450px' }}>{new Date(feedback.submittedAt).toLocaleDateString()} <br /> {new Date(feedback.submittedAt).toLocaleTimeString()}</p>
 
                                     </div>
@@ -117,7 +139,7 @@ export default function Feedbacks() {
             </div>
             {/* Single Post End*/}
             {/* Footer Start */}
-            <Footer/>
+            <Footer />
             {/* Footer End */}
         </>
     )

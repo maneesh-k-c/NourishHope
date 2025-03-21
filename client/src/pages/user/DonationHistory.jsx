@@ -110,7 +110,7 @@ export default function DonationHistory() {
                     {item?.orphanage_id.map((data) =>(
                      <>
                       <p>
-                      <b>Orphanage</b> : {data.orphanage.orphanage_name} <br />
+                      <b>Orphanage</b> : {data?.orphanage?.orphanage_name} <br />
                       <b>quantity received</b> : {data.donated} <br />
                       <b>received date</b> : {new Date(data.date).toLocaleDateString("en-GB")} <br />
 

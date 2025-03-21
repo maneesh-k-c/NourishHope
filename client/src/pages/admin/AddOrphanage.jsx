@@ -224,16 +224,16 @@ export default function AddOrphanage() {
                                     type="file"
                                     id="orphanage_images"
                                     name="orphanage_images"
-                                    style={{ display: 'none' }}
+                                    style={{width:'100%'}}
                                     onChange={handleFileChange}
                                 />
-                                <button
+                                {/* <button
                                     type="button"
                                     className="btn btn-primary"
                                     onClick={() => document.getElementById('orphanage_images').click()}
                                 >
                                     Upload Image
-                                </button>
+                                </button> */}
                                 {errors.orphanage_images && <p className="help-block text-danger">{errors.orphanage_images}</p>}
                             </div>
 

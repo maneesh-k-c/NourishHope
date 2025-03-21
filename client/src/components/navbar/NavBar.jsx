@@ -8,7 +8,7 @@ export default function NavBar() {
     //
     const logOut = () => {
         Swal.fire({
-            title: "Do you want logout?",
+            title: "Do you want delete?",
             showDenyButton: true,
             confirmButtonText: "Yes",
             denyButtonText: `No`

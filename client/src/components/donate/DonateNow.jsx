@@ -9,8 +9,9 @@ export default function DonateNow() {
     const [food_type, setFoodtype] = useState('');
     const [upiId, setUpiId] = useState("");
     const [showModal, setShowModal] = useState(false);
+    const [donationAmount, setDonationAmount] = useState(false);
     const [restaurantData, setRestaurantData] = useState([]);
-    console.log(restaurantData);
+    console.log(restaurantData, donations, food_type);
 
     useEffect(() => {
         axios.get("http://localhost:5000/api/auth/getrestaurant").then((res) => {
@@ -36,6 +37,8 @@ export default function DonateNow() {
             alert("Please select a restaurant and enter a valid donation amount.");
             return;
         }
+        
+        setDonationAmount(donations * 100)
         setShowModal(true);
         const formData = {
             login_id: localStorage.getItem("loginId"),
@@ -49,10 +52,9 @@ export default function DonateNow() {
             setRestaurant('')
             setFoodtype('')
         })
-        
-    };
 
-    const donationAmount = donations * 100; // Fixed donation per unit
+    };
+    
     const upiUrl = `upi://pay?pa=${upiId}&pn=${restaurant}&am=${donationAmount}&cu=INR`;
 
     const confirmation = () => {

@@ -78,6 +78,34 @@ restaurantRouter.post('/submitfeedback', async (req, res) => {
     }
 });
 
+restaurantRouter.get('/delete_feedback/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const orphanageDatas = await Feedback.deleteOne({ _id: id });
+    if (orphanageDatas.deletedCount == 1) {      
+      return res.status(200).json({
+        Success: true,
+        Error: false,
+        data: orphanageDatas,
+        Message: 'Feedback deleted successfully',
+      });
+    }
+    else {
+      return res.status(400).json({
+        Success: false,
+        Error: true,
+        Message: 'Failed while deleting feedback',
+      })
+    }
+  } catch (error) {
+    return res.status(500).json({
+      Success: false,
+      Error: true,
+      Message: 'Something went wrong',
+    });
+  }
+})
+
 restaurantRouter.get('/view-single-feedback/:id', async (req, res) => {
     try {
         const { id } = req.params
