@@ -410,12 +410,6 @@ export default function Registration() {
                                 ) : (
                                     // Restaurant Registration Form
 
-
-
-
-
-
-
                                     <form onSubmit={handleSubmitrest}>
                                         <div className="control-group" style={{ position: 'relative' }}>
                                             <input

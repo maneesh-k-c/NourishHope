@@ -161,7 +161,7 @@ const navigate = useNavigate()
                 <div className="contact">
                     <div className="container">
                         <div className="contact-img" style={{ filter: 'blur(3px)' }}>
-                            <img src="img/contact.jpg" alt="Image" />
+                            <img src="img/orphanage reg.jpg" alt="Image" />
                         </div>
                         <div className="contact-form" style={{ marginTop: '-350px' }}>
                             <form onSubmit={handleSubmit}>

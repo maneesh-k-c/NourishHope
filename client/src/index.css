@@ -46,6 +46,19 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+form {
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
 button:hover {
   border-color: #646cff;
 }

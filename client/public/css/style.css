@@ -824,6 +824,7 @@ a:focus {
 
 .donate .donate-form .control-group {
     margin-bottom: 15px;
+    border-radius: 10px;
 }
 
 .donate .donate-form .form-control {
@@ -1254,6 +1255,7 @@ a:focus {
 
 .volunteer .volunteer-form .control-group {
     margin-bottom: 15px;
+    border-radius: 10px;
 }
 
 .volunteer .volunteer-form .form-control {
