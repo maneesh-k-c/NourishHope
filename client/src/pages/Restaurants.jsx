@@ -14,10 +14,15 @@ export default function Restaurants() {
         })
     }, [])
     const handleDelete = (id) => {
-        axios.get(`http://localhost:5000/api/auth/delete_rest/${id}`).then((res) => {
-            toast.success(res.data.Message)
-        })
-    }
+        if (window.confirm("Are you sure you want to delete this item?")) {
+            axios.get(`http://localhost:5000/api/auth/delete_rest/${id}`).then((res) => {
+                toast.success(res.data.Message);
+            }).catch((err) => {
+                toast.error("Failed to delete item");
+            });
+        }
+    };
+    
 
     return (
         <>
@@ -87,7 +92,7 @@ export default function Restaurants() {
 
                     <div className="row">
                         {restaurant.map((data) => (
-                            <div className="col-lg-4">
+                            <div className="col-lg-6">
                                 <div className="event-item">
                                     <img src={data.restaurant_images[0]} alt="Image" />
                                     <div className="event-content">
@@ -143,7 +148,7 @@ export default function Restaurants() {
                                                 );
                                             })}
 
-                                            <p>
+                                            <p className="des-para">
                                                 {data?.description}
                                             </p>
                                             {role == 'admin' ?

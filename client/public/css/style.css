@@ -2161,3 +2161,9 @@ a:focus {
         text-align: center;
     }
 }
+
+.des-para{
+    max-width: 150px;
+    overflow: hidden;
+    text-overflow: clip;
+}

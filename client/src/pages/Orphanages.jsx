@@ -14,12 +14,19 @@ export default function Orphanages() {
     },[])
 
     const handleDelete = (id) => {
-        axios.get(`http://localhost:5000/api/auth/orphanage_delete/${id}`).then((res) => {
-            toast.success(res.data.Message)
-            const filterData = orphanages.filter((item) => item._id !== id)
-            setOrphanages(filterData)
-        })
-    }
+        if (window.confirm("Are you sure you want to delete this orphanage?")) {
+            axios.get(`http://localhost:5000/api/auth/orphanage_delete/${id}`)
+                .then((res) => {
+                    toast.success(res.data.Message);
+                    const filterData = orphanages.filter((item) => item._id !== id);
+                    setOrphanages(filterData);
+                })
+                .catch((err) => {
+                    toast.error("Failed to delete orphanage");
+                });
+        }
+    };
+    
     return (
         <>
          <Toaster
