@@ -618,6 +618,15 @@ export default function Home() {
                       <img src={data.restaurant_images[0]} style={{ height: '350px', width: '100%', objectFit: 'cover' }} alt="Image" />
                       <div className="event-content">
                         <div className="event-meta">
+                        <div className="blog-meta">
+                        <p>
+                          <i className="fa fa-phone" />
+                          <a href="">{data.mobile}</a><br /><br/>
+                          <i className="fa fa-envelope" />
+                          <a href="">{data.email}</a>
+                        </p>
+
+                      </div>
                           <p>
                             {[1, 2, 3, 4, 5].map((star) => {
                               let starType = "gray"; // Default gray star
