@@ -671,8 +671,7 @@ export default function Home() {
                         <div className="event-text">
                           <h3>{data?.restaurant_name}</h3>
                           <p>
-                            Lorem ipsum dolor sit amet elit. Neca pretim miura bitur
-                            facili ornare velit non vulpte liqum metus tortor
+                            {data?.description}
                           </p>
                           <a className="btn btn-custom" href={`/single-rest/${data?._id}`}>
                             View
