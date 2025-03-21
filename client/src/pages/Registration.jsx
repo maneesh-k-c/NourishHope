@@ -188,6 +188,7 @@ export default function Registration() {
                 formDataToSend.append('image', formData.image);
                 formDataToSend.append('username', formData.username);
                 formDataToSend.append('password', formData.password);
+      
                 axios.post('http://localhost:5000/api/auth/user', formDataToSend).then((res) => {
                     toast.success(res.data.Message)
                     setTimeout(() => {
@@ -218,7 +219,8 @@ export default function Registration() {
             formDataToSend.append('address', formRestData.address);
             formDataToSend.append('image', formRestData.image);
             formDataToSend.append('username', formRestData.username);
-            formDataToSend.append('password', formRestData.password);       
+            formDataToSend.append('password', formRestData.password); 
+            formDataToSend.append('description', formRestData.description);      
            
             axios.post('http://localhost:5000/api/auth/restaurant', formDataToSend).then((res) => {
                 toast.success(res.data.Message)

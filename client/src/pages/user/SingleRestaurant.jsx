@@ -95,6 +95,7 @@ export default function SingleRestaurant() {
             setUpiId(res.data.data.upi)
         })
     }, [id])
+    console.log('res:',restaurant);
     return (
         <>
             <>
