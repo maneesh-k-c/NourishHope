@@ -831,7 +831,7 @@ a:focus {
     height: 60px;
     color: #ffffff;
     padding: 0 15px;
-    border-radius: 0;
+    border-radius: 10px;
     border: 1px solid #ffffff;
     background: transparent;
 }
@@ -1262,7 +1262,7 @@ a:focus {
     height: 60px;
     color: #ffffff;
     padding: 0 15px;
-    border-radius: 0;
+    border-radius: 10px;
     border: 1px solid #ffffff;
     background: transparent;
 }
@@ -1270,6 +1270,7 @@ a:focus {
 .volunteer .volunteer-form textarea.form-control {
     height: 120px;
     padding: 15px;
+    border-radius: 10px;
 }
 
 .volunteer .volunteer-form .form-control::placeholder {
