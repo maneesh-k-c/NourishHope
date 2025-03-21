@@ -96,11 +96,7 @@ export default function Login() {
                                 </div>
                                 <div className="donate-text">
                                     <p>
-                                        Lorem ipsum dolor sit amet elit. Phasellus nec pretium mi.
-                                        Curabitur facilisis ornare velit non. Aliquam metus tortor,
-                                        auctor id gravida, viverra quis sem. Curabitur non nisl nec nisi
-                                        maximus. Aenean convallis porttitor. Aliquam interdum at lacus
-                                        non blandit.
+                                    Welcome back! Continue your journey of giving by logging in. Access your donation history, connect with restaurants and orphanages, and make an impact with just a few clicks. Stay updated with real-time notifications and keep spreading kindness. Your support matters!
                                     </p>
                                 </div>
                             </div>
