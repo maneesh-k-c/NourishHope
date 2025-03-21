@@ -22,6 +22,7 @@ export default function DonationsRestaurant() {
     const [login_id, setLogin_id] = useState(localStorage.getItem('loginId'));
     useEffect(() => {
         axios.get(`http://localhost:5000/api/rest/list_donations/${login_id}`)
+        // `http://localhost:5000/api/rest/list_donations_orp/
             .then(res => {
                 setDonations(res.data.data)
             });
@@ -61,6 +62,7 @@ export default function DonationsRestaurant() {
     const handleAssign = (id) => {
         setDonationId(id)
     }
+    console.log(donations);
     return (
         <>
             <Toaster

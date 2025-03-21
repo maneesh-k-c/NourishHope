@@ -167,35 +167,22 @@ restaurantRouter.get('/list_donations/:login_id', async (req, res) => {
                 Message: 'Invalid login_id',
             });
         }
-        const id = await restaurantData.findOne({ login_id: login_id })
-                                        
 
-        const donations = await donationData.find({ restaurant_id: id?._id })
-            .populate('login_id', 'username email')
-            // .populate({
-            //     path: 'login_id',
-            //     model: 'user_tb',
-            //     select: 'name mobile email'
-            // })
-            .populate('orphanage_id.orphanage', 'orphanage_name address mobile');
-            
-            // const userDatas = await userData.findOne({login_id:donations[0]?.login_id?._id})
-            // donations.user=userDatas
-            if (donations.length > 0 && donations[0].login_id) {
-                for (let i = 0; i < donations.length; i++) {
-                    if (donations[i].login_id) { // Ensure login_id is not null
-                        const userDatas = await userData.findOne({ login_id: donations[i]?.login_id?._id });
-                        donations[i] = { ...donations[i]._doc, user: userDatas }; // Correct way to add user data
-                    }
-                }
-                
-                console.log(donations);
-            return res.status(200).json({
-                Success: true,
-                Error: false,
-                data: donations,
+        // Find the restaurant linked to this login_id
+        const restaurant = await restaurantData.findOne({ login_id: login_id });
+
+        if (!restaurant) {
+            return res.status(404).json({
+                Success: false,
+                Error: true,
+                Message: 'Restaurant not found',
             });
         }
+
+        // Find donations related to this restaurant
+        const donations = await donationData.find({ restaurant_id: restaurant._id })
+            .populate('login_id', 'username email')
+            .populate('orphanage_id.orphanage', 'orphanage_name address mobile');
 
         if (!donations.length) {
             return res.status(404).json({
@@ -205,7 +192,22 @@ restaurantRouter.get('/list_donations/:login_id', async (req, res) => {
             });
         }
 
+        // Fetch user details for each donation's login_id in parallel
+        const userDetailsPromises = donations.map(async (donation) => {
+            if (donation.login_id) {
+                const userDatas = await userData.findOne({ login_id: donation.login_id._id });
+                return { ...donation._doc, user: userDatas };
+            }
+            return donation._doc;
+        });
 
+        const enrichedDonations = await Promise.all(userDetailsPromises);
+
+        return res.status(200).json({
+            Success: true,
+            Error: false,
+            data: enrichedDonations,
+        });
 
     } catch (error) {
         console.error('Error fetching donations:', error);
@@ -213,10 +215,11 @@ restaurantRouter.get('/list_donations/:login_id', async (req, res) => {
             Success: false,
             Error: true,
             Message: 'Internal Server Error',
-            Details: error,
+            Details: error.message,
         });
     }
 });
+
 
 restaurantRouter.get('/list_donations_user/:login_id', async (req, res) => {
     try {
