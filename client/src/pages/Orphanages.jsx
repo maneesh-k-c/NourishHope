@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import NavBar from '../components/navbar/NavBar'
 import Footer from '../components/navbar/Footer'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 import toast, { Toaster } from 'react-hot-toast';
 export default function Orphanages() {
     const [orphanages, setOrphanages] = useState([])
@@ -14,17 +15,26 @@ export default function Orphanages() {
     },[])
 
     const handleDelete = (id) => {
-        if (window.confirm("Are you sure you want to delete this orphanage?")) {
-            axios.get(`http://localhost:5000/api/auth/orphanage_delete/${id}`)
-                .then((res) => {
-                    toast.success(res.data.Message);
-                    const filterData = orphanages.filter((item) => item._id !== id);
-                    setOrphanages(filterData);
-                })
-                .catch((err) => {
-                    toast.error("Failed to delete orphanage");
-                });
-        }
+        Swal.fire({
+            title: "Are you sure you want to delete this orphanage?",
+            text: "This action cannot be undone!",
+            icon: "warning",
+            showDenyButton: true,
+            confirmButtonText: "Yes",
+            cancelButtonText: "No",
+            dangerMode: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.get(`http://localhost:5000/api/auth/orphanage_delete/${id}`)
+                    .then((res) => {
+                        toast.success(res.data.Message);
+                        setOrphanages((prevOrphanages) => prevOrphanages.filter((item) => item._id !== id));
+                    })
+                    .catch((err) => {
+                        toast.error("Failed to delete orphanage");
+                    });
+            }
+        });
     };
     
     return (

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import NavBar from '../components/navbar/NavBar'
 import Footer from '../components/navbar/Footer'
 import axios from 'axios'
+import Swal from 'sweetalert2'
 import toast, { Toaster } from 'react-hot-toast';
 export default function Restaurants() {
     const [restaurant, setRestaurant] = useState([])
@@ -14,15 +15,26 @@ export default function Restaurants() {
         })
     }, [])
     const handleDelete = (id) => {
-        if (window.confirm("Are you sure you want to delete this item?")) {
-            axios.get(`http://localhost:5000/api/auth/delete_rest/${id}`).then((res) => {
-                toast.success(res.data.Message);
-            }).catch((err) => {
-                toast.error("Failed to delete item");
-            });
-        }
+        Swal.fire({
+            title: "Are you sure you want to delete this item?",
+            text: "This action cannot be undone!",
+            showDenyButton: true,
+            confirmButtonText: "Yes",
+            denyButtonText: "No",
+            icon: "warning"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.get(`http://localhost:5000/api/auth/delete_rest/${id}`)
+                    .then((res) => {
+                        toast.success(res.data.Message);
+                        setRestaurant((prevRestaurant) => prevRestaurant.filter((item) => item._id !== id));
+                    })
+                    .catch((err) => {
+                        toast.error("Failed to delete item");
+                    });
+            }
+        });
     };
-    
 
     return (
         <>
