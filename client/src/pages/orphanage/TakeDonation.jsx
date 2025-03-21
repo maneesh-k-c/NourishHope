@@ -174,6 +174,8 @@ export default function TakeDonation() {
                                                 <p>
                                                     Date: {new Date(donation.submittedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
                                                 </p>
+                                                <p>Restaurant:{donation?.restaurant_id?.restaurant_name}</p>
+                                        
 
                                                 <a className="btn btn-custom btn-primary text-white" onClick={() => { handleAssign(donation._id), handleFoodType(donation.food_type), setDonatedQuantity(donation.quantity), handleDonation(donation._id) }}>
                                                     Take Donation
