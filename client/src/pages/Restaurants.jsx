@@ -92,6 +92,12 @@ export default function Restaurants() {
                                     <img src={data.restaurant_images[0]} alt="Image" />
                                     <div className="event-content">
                                         <div className="event-meta">
+                                            <p>
+                                                <i className="fa fa-phone" />
+                                                <a href="">{data.mobile}</a><br /><br />
+                                                <i className="fa fa-envelope" />
+                                                <a href="">{data.email}</a>
+                                            </p>
                                             <p style={{ textWrap: 'auto' }}>
                                                 <i className="fa fa-map-marker-alt" />
                                                 {data?.address}
@@ -127,7 +133,7 @@ export default function Restaurants() {
                                                     >
                                                         {starType === "half" ? (
                                                             <>
-                                                                <span style={{ position: "absolute", overflow: "hidden", width: "43%", color:'gold' }}>★</span>
+                                                                <span style={{ position: "absolute", overflow: "hidden", width: "43%", color: 'gold' }}>★</span>
                                                                 <span style={{ color: "gray" }}>★</span>
                                                             </>
                                                         ) : (
