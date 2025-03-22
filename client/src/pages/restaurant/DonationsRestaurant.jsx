@@ -169,6 +169,9 @@ export default function DonationsRestaurant() {
                                                                 Orphanage Name : {data?.orphanage?.orphanage_name}
                                                             </p>
                                                             <p>
+                                                                Orphanage Contact : {data?.orphanage?.mobile}
+                                                            </p>
+                                                            <p>
                                                                 Items Take : {data.donated}
                                                             </p>
 
