@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 import axios from 'axios'
 import toast, { Toaster } from 'react-hot-toast';
 import QRCode from 'react-qr-code';
+import Swal from 'sweetalert2'
 import Footer from '../../components/navbar/Footer';
 export default function SingleRestaurant() {
     const [rating, setRating] = useState(0);
@@ -12,6 +13,14 @@ export default function SingleRestaurant() {
     const handleRatingClick = (value) => {
         setRating(value);
     };
+    const confirmation = () => {
+            setShowModal(false)
+            Swal.fire({
+                icon: "success",
+                title: "Success!",
+                text: "Payment completed!",
+            });
+        }
 
     const handleRatingHover = (value) => {
         setHover(value);
@@ -339,7 +348,7 @@ export default function SingleRestaurant() {
                                     <button
                                         type="button"
                                         className="btn btn-secondary"
-                                        onClick={() => setShowModal(false)}
+                                        onClick={() => confirmation(false)} 
                                     >
                                         Close
                                     </button>
