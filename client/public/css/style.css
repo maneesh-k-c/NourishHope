@@ -993,8 +993,8 @@ a:focus {
 }
 
 .facts .facts-text h3.facts-dollar::after {
-    content: "\f155";
-    right: -18px;
+    content: "\f067";
+    right: -25px;
 }
 
 .facts .facts-text p {
