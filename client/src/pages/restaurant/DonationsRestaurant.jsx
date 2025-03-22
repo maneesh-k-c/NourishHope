@@ -22,7 +22,7 @@ export default function DonationsRestaurant() {
     const [login_id, setLogin_id] = useState(localStorage.getItem('loginId'));
     useEffect(() => {
         axios.get(`http://localhost:5000/api/rest/list_donations/${login_id}`)
-        // `http://localhost:5000/api/rest/list_donations_orp/
+            // `http://localhost:5000/api/rest/list_donations_orp/
             .then(res => {
                 setDonations(res.data.data)
             });
@@ -46,10 +46,10 @@ export default function DonationsRestaurant() {
             quantity: assignQuantity,
         }
         console.log(data);
-        
+
         axios.put(`http://localhost:5000/api/user/assign_donation/${donationId}`, data)
             .then(res => {
-                console.log(res);   
+                console.log(res);
                 toast.success(res.data.Message);
                 setShowModal(false);
                 window.location.reload();
@@ -161,8 +161,23 @@ export default function DonationsRestaurant() {
                                                 <p>
                                                     Date: {new Date(donation.submittedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
                                                 </p>
+                                                {donation?.orphanage_id ?
+                                                    donation?.orphanage_id.map((data) => (
+                                                        <>
+                                                            <hr />
+                                                            <p>
+                                                                Orphanage Name : {data?.orphanage?.orphanage_name}
+                                                            </p>
+                                                            <p>
+                                                                Items Take : {data.donated}
+                                                            </p>
 
-                                                        {/* <a className="btn btn-custom btn-primary text-white" onClick={() => { handleAssign(donation._id), handleFoodType(donation.food_type), setDonatedQuantity(donation.quantity) }}>
+                                                        </>
+                                                    ))
+                                                    : ''
+                                                }
+
+                                                {/* <a className="btn btn-custom btn-primary text-white" onClick={() => { handleAssign(donation._id), handleFoodType(donation.food_type), setDonatedQuantity(donation.quantity) }}>
                                                             Assign
                                                         </a> */}
                                             </div>
@@ -270,7 +285,7 @@ export default function DonationsRestaurant() {
             </div>
             {/* Single Post End*/}
             {/* Footer Start */}
-          <Footer/>
+            <Footer />
             {/* Footer End */}
         </>
     )
