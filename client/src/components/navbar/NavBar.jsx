@@ -209,7 +209,7 @@ export default function NavBar() {
                                         <a href="/" className="nav-item nav-link active">
                                             Home
                                         </a>
-                                        <div className="nav-item dropdown">
+                                        {/* <div className="nav-item dropdown">
                                             <a
                                                 href="#"
                                                 className="nav-link dropdown-toggle"
@@ -226,7 +226,7 @@ export default function NavBar() {
                                                 </a>
 
                                             </div>
-                                        </div>
+                                        </div> */}
                                         <a href="/take-donation" className="nav-item nav-link ">
                                             Take Donation
                                         </a>
