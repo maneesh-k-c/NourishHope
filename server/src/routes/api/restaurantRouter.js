@@ -4,6 +4,7 @@ const Feedback = require('../../models/feedbackModel');
 const donationData = require('../../models/donationModel');
 const { default: mongoose } = require('mongoose');
 const userData = require('../../models/userModel');
+const orphanageData = require('../../models/orphanageModel');
 const restaurantRouter = express.Router();
 
 
@@ -189,6 +190,70 @@ restaurantRouter.get('/list_donations/:login_id', async (req, res) => {
                 Success: false,
                 Error: true,
                 Message: 'No donations found for this restaurant',
+            });
+        }
+
+        // Fetch user details for each donation's login_id in parallel
+        const userDetailsPromises = donations.map(async (donation) => {
+            if (donation.login_id) {
+                const userDatas = await userData.findOne({ login_id: donation.login_id._id });
+                return { ...donation._doc, user: userDatas };
+            }
+            return donation._doc;
+        });
+
+        const enrichedDonations = await Promise.all(userDetailsPromises);
+
+        return res.status(200).json({
+            Success: true,
+            Error: false,
+            data: enrichedDonations,
+        });
+
+    } catch (error) {
+        console.error('Error fetching donations:', error);
+        return res.status(500).json({
+            Success: false,
+            Error: true,
+            Message: 'Internal Server Error',
+            Details: error.message,
+        });
+    }
+});
+restaurantRouter.get('/taken_donations_orphanage/:login_id', async (req, res) => {
+    try {
+        const { login_id } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(login_id)) {
+            return res.status(400).json({
+                Success: false,
+                Error: true,
+                Message: 'Invalid login_id',
+            });
+        }
+
+        // Find the restaurant linked to this login_id
+        const orphanageId = await orphanageData.findOne({ login_id: login_id });
+
+        if (!orphanageId) {
+            return res.status(404).json({
+                Success: false,
+                Error: true,
+                Message: 'Orphanage not found',
+            });
+        }
+
+        // Find donations related to this restaurant
+        const donations = await donationData.find({ "orphanage_id.orphanage": orphanageId._id })
+            .populate('login_id', 'username email')
+            .populate("restaurant_id", "restaurant_name mobile email")
+            .populate('orphanage_id.orphanage', 'orphanage_name address mobile login_id');
+
+        if (!donations.length) {
+            return res.status(404).json({
+                Success: false,
+                Error: true,
+                Message: 'No donations found for this orphanage',
             });
         }
 

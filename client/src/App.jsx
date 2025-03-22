@@ -18,6 +18,7 @@ import UpdateOrphanage from './pages/orphanage/UpdateOrphanage'
 import UpdateUser from './pages/user/UpdateUser'
 import UpdateRest from './pages/restaurant/UpdateRest'
 import Notification from './pages/user/Notification'
+import AllTakenDonations from './pages/orphanage/AllTakenDonations'
 
 
 function App() {
@@ -49,6 +50,7 @@ function App() {
         <Route path="/update-orphanage" element={<UpdateOrphanage/>} />  
         <Route path="/update-user" element={<UpdateUser/>} />  
         <Route path="/update-rest" element={<UpdateRest/>} />  
+        <Route path="/all-taken-donations" element={<AllTakenDonations/>} />  
       
         </Routes>
     </BrowserRouter>

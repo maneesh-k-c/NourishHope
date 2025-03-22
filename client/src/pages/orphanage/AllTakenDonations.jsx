@@ -5,7 +5,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import NavBar from '../../components/navbar/NavBar';
 import Footer from '../../components/navbar/Footer';
 
-export default function DonationsRestaurant() {
+export default function AllTakenDonations() {
     const [donations, setDonations] = useState([]);
     const [donationId, setDonationId] = useState('');
     const [donatedQuantity, setDonatedQuantity] = useState('');
@@ -17,19 +17,16 @@ export default function DonationsRestaurant() {
     const handleFoodType = (value) => {
         setFoodType(value);
     }
-    console.log(orphanageRequest, foodType, donationId, donatedQuantity, assignQuantity);
+    console.log(donations);
 
     const [login_id, setLogin_id] = useState(localStorage.getItem('loginId'));
     useEffect(() => {
-        axios.get(`http://localhost:5000/api/rest/list_donations/${login_id}`)
+        axios.get(`http://localhost:5000/api/rest/taken_donations_orphanage/${login_id}`)
             // `http://localhost:5000/api/rest/list_donations_orp/
             .then(res => {
                 setDonations(res.data.data)
             });
-        axios.get(`http://localhost:5000/api/orphanage/all-requests/`)
-            .then(res => {
-                setOrphanageRequest(res.data.data)
-            });
+        
     }, [login_id])
 
     const handleDonation = (id) => {
@@ -136,7 +133,7 @@ export default function DonationsRestaurant() {
 
                                         <div className="event-content">
                                             <div className="event-meta">
-                                                <p style={{ textWrap: 'auto' }}>
+                                                {/* <p style={{ textWrap: 'auto' }}>
                                                     <i className="fa fa-user" />
                                                     {donation.user?.name}
                                                 </p>
@@ -147,30 +144,26 @@ export default function DonationsRestaurant() {
                                                 <p style={{ textWrap: 'auto' }}>
                                                     <i className="far fa-envelope" />
                                                     {donation.user?.email}
-                                                </p>
+                                                </p> */}
 
                                             </div>
                                             <div className="event-text">
                                                 <h3>{donation.food_type}</h3>
                                                 <p>
-                                                    Items Donated : {donation.quantity}
+                                                    Items Donated from : {donation.restaurant_id?.restaurant_name}
                                                 </p>
-                                                <p>
-                                                    Status : {donation.status}
-                                                </p>
+                                                
                                                 <p>
                                                     Date: {new Date(donation.submittedAt).toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })}
                                                 </p>
                                                 {donation?.orphanage_id ?
-                                                    donation?.orphanage_id.map((data) => (
+                                                    donation?.orphanage_id.filter((details)=>{return details?.orphanage?.login_id==login_id}).map((data) => (
                                                         <>
                                                             <hr />
                                                             <p>
                                                                 Orphanage Name : {data?.orphanage?.orphanage_name}
                                                             </p>
-                                                            <p>
-                                                                Orphanage Contact    : {data?.orphanage?.mobile}
-                                                            </p>
+                                                            
                                                             <p>
                                                                 Items Take : {data.donated}
                                                             </p>

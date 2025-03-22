@@ -227,12 +227,12 @@ export default function NavBar() {
 
                                             </div>
                                         </div>
-                                        <a href="/take-donation" className="nav-item nav-link active">
+                                        <a href="/take-donation" className="nav-item nav-link ">
                                             Take Donation
                                         </a>
-                                        {/* <a href="/feedback" className="nav-item nav-link active">
-                                            Feedbacks
-                                        </a> */}
+                                        <a href="/all-taken-donations" className="nav-item nav-link ">
+                                            Donations
+                                        </a>
 
                                         <a href="/profile" className="nav-item nav-link">
                                             Profile
